@@ -1,0 +1,2 @@
+include ':app', ':stextlib'
+rootProject.name='customview'
