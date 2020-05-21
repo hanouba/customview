@@ -1,2 +1,2 @@
-include ':app', ':stextlib'
+include ':app', ':stextlib', ':utils'
 rootProject.name='customview'
