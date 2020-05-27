@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.hansen.customview.activity.Recycle2Activity;
-import com.hansen.customview.activity.RecyclerActivity;
+import com.hansen.customview.hellochart.ColumnChartActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,5 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void impRecyclerView(View view) {
         startActivity(new Intent(this, Recycle2Activity.class));
+    }
+
+    public void toHelloChart(View view) {
+        startActivity(new Intent(this, ColumnChartActivity.class));
     }
 }

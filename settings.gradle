@@ -1,2 +1,2 @@
-include ':app', ':stextlib', ':utils', ':recyclerlib'
+include ':app', ':stextlib', ':utils', ':recyclerlib', ':hellochart_lib'
 rootProject.name='customview'

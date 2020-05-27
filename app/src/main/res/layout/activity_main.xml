@@ -26,4 +26,10 @@
         android:text="RecyclerView实现分组列表悬浮顶部栏效果"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:onClick="toHelloChart"
+        android:text="hellochart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>
