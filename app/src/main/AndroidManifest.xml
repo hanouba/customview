@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.Recycle2Activity"></activity>
+        <activity android:name=".mpandroidchart.MultiDatasetActivity"></activity>
+        <activity android:name=".mpandroidchart.MpAndroidActivity" />
+        <activity android:name=".activity.Recycle2Activity" />
         <activity android:name=".activity.RecyclerActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -18,8 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".hellochart.ColumnChartActivity"></activity>
+        <activity android:name=".hellochart.ColumnChartActivity" />
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.hansen.customview.hellochart;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.hansen.customview.R;
 
 import java.util.ArrayList;
@@ -53,7 +55,7 @@ public class ColumnChartActivity extends AppCompatActivity {
         private ColumnChartView chart;
         private ColumnChartData data;
         private boolean hasAxes = true;
-        private boolean hasAxesNames = true;
+        private boolean hasAxesNames = false;
         private boolean hasLabels = false;
         private boolean hasLabelForSelected = false;
         private int dataType = DEFAULT_DATA;
@@ -173,7 +175,7 @@ public class ColumnChartActivity extends AppCompatActivity {
 
                 values = new ArrayList<SubcolumnValue>();
                 for (int j = 0; j < numSubcolumns; ++j) {
-                    values.add(new SubcolumnValue((float) Math.random() * 50f + 5, ChartUtils.pickColor()));
+                    values.add(new SubcolumnValue((float) Math.random() * 50f + 5, ChartUtils.pickColor(),"我的名字"+j));
                 }
 
                 Column column = new Column(values);
@@ -215,7 +217,7 @@ public class ColumnChartActivity extends AppCompatActivity {
 
                 values = new ArrayList<SubcolumnValue>();
                 for (int j = 0; j < numSubcolumns; ++j) {
-                    values.add(new SubcolumnValue((float) Math.random() * 50f + 5, ChartUtils.pickColor()));
+                    values.add(new SubcolumnValue((float) Math.random() * 50f + 5, ChartUtils.pickColor(),"你的名字"+j));
                 }
 
                 Column column = new Column(values);
@@ -248,7 +250,10 @@ public class ColumnChartActivity extends AppCompatActivity {
          * Generates columns with stacked subcolumns.
          */
         private void generateStackedData() {
+
+            //每列几组数据
             int numSubcolumns = 2;
+            //列数
             int numColumns = 8;
             // Column can have many stacked subcolumns, here I use 4 stacke subcolumn in each of 4 columns.
             List<Column> columns = new ArrayList<Column>();
@@ -257,7 +262,7 @@ public class ColumnChartActivity extends AppCompatActivity {
 
                 values = new ArrayList<SubcolumnValue>();
                 for (int j = 0; j < numSubcolumns; ++j) {
-                    values.add(new SubcolumnValue((float) Math.random() * 20f + 5, ChartUtils.pickColor()));
+                    values.add(new SubcolumnValue((float) Math.random() * 20f + 5, ChartUtils.pickColor(),"我们"+j));
                 }
 
                 Column column = new Column(values);
@@ -287,7 +292,52 @@ public class ColumnChartActivity extends AppCompatActivity {
 
             chart.setColumnChartData(data);
         }
-
+//        /**
+//         * 测试运维助手修改的数据
+//         */
+//        private void testStackedData() {
+//            //每列几组数据
+//            int numSubcolumns = 2;
+//            List<Column> columns = new ArrayList<Column>();
+//            List<SubcolumnValue> values;
+//
+//            String testData = "{    \"data\": {        \"undoneOrderInfo\": [            {                \"NAME\": \"维护组长\",                \"UID\": \"008676_维护组长\",                \"arrivedCount\": 170,                \"unArrivedCount\": 230,                \"COUNT\": 400            },            {                \"NAME\": \"whtv\",                \"UID\": \"008676_whtv\",                \"arrivedCount\": 112,                \"unArrivedCount\": 50,                \"COUNT\": 162            }        ]    },    \"msg\": \"\",    \"id\": \":RO;\",    \"result\": \"ok\"}";
+//            Gson gson = new Gson();
+//            UnDoneChartBean unDoneChartBean = gson.fromJson(testData, UnDoneChartBean.class);
+//            List<UnDoneChartBean.DataBean.UndoneOrderInfoBean> undoneOrderInfo = unDoneChartBean.getData().getUndoneOrderInfo();
+//            for (int i = 0; i < undoneOrderInfo.size(); i++) {
+//                values = new ArrayList<SubcolumnValue>();
+//
+//                    values.add(new SubcolumnValue(undoneOrderInfo.get(i).getUnArrivedCount(), Color.parseColor("#FEA213"),undoneOrderInfo.get(i).getUnArrivedCount()+""));
+//                    values.add(new SubcolumnValue(undoneOrderInfo.get(i).getArrivedCount(),Color.parseColor("#16ADF6"),undoneOrderInfo.get(i).getArrivedCount()+""));
+//
+//                Column column = new Column(values);
+//                column.setHasLabels(hasLabels);
+//                column.setHasLabelsOnlyForSelected(hasLabelForSelected);
+//                columns.add(column);
+//            }
+//
+//            data = new ColumnChartData(columns);
+//
+//            // Set stacked flag.
+//            data.setStacked(true);
+//
+//            if (hasAxes) {
+//                Axis axisX = new Axis();
+//                Axis axisY = new Axis().setHasLines(true);
+//                if (hasAxesNames) {
+//                    axisX.setName("Axis X");
+//                    axisY.setName("Axis Y");
+//                }
+//                data.setAxisXBottom(axisX);
+//                data.setAxisYLeft(axisY);
+//            } else {
+//                data.setAxisXBottom(null);
+//                data.setAxisYLeft(null);
+//            }
+//
+//            chart.setColumnChartData(data);
+//        }
         private void generateNegativeSubcolumnsData() {
 
             int numSubcolumns = 4;
@@ -300,7 +350,7 @@ public class ColumnChartActivity extends AppCompatActivity {
                 for (int j = 0; j < numSubcolumns; ++j) {
                     int sign = getSign();
                     values.add(new SubcolumnValue((float) Math.random() * 50f * sign + 5 * sign, ChartUtils.pickColor
-                            ()));
+                            (),""));
                 }
 
                 Column column = new Column(values);
@@ -340,7 +390,7 @@ public class ColumnChartActivity extends AppCompatActivity {
                 values = new ArrayList<SubcolumnValue>();
                 for (int j = 0; j < numSubcolumns; ++j) {
                     int sign = getSign();
-                    values.add(new SubcolumnValue((float) Math.random() * 20f * sign + 5 * sign, ChartUtils.pickColor()));
+                    values.add(new SubcolumnValue((float) Math.random() * 20f * sign + 5 * sign, ChartUtils.pickColor(),""));
                 }
 
                 Column column = new Column(values);
@@ -386,6 +436,7 @@ public class ColumnChartActivity extends AppCompatActivity {
                     break;
                 case STACKED_DATA:
                     generateStackedData();
+//                    testStackedData();
                     break;
                 case NEGATIVE_SUBCOLUMNS_DATA:
                     generateNegativeSubcolumnsData();
@@ -398,6 +449,8 @@ public class ColumnChartActivity extends AppCompatActivity {
                     break;
             }
         }
+
+
 
         private void toggleLabels() {
             hasLabels = !hasLabels;

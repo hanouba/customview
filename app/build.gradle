@@ -31,4 +31,7 @@ dependencies {
     implementation project(path: ':hellochart_lib')
     //for view to use
     implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

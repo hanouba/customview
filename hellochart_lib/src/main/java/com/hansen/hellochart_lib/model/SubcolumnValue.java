@@ -11,6 +11,7 @@ import com.hansen.hellochart_lib.view.Chart;
 public class SubcolumnValue {
 
     private float value;
+    private String name;
     private float originValue;
     private float diff;
     private int color = ChartUtils.DEFAULT_COLOR;
@@ -26,10 +27,11 @@ public class SubcolumnValue {
         setValue(value);
     }
 
-    public SubcolumnValue(float value, int color) {
+    public SubcolumnValue(float value, int color,String name) {
         // point and targetPoint have to be different objects
         setValue(value);
         setColor(color);
+        setName(name);
     }
 
     public SubcolumnValue(SubcolumnValue columnValue) {
@@ -57,6 +59,10 @@ public class SubcolumnValue {
         return this;
     }
 
+    public SubcolumnValue setName(String name) {
+        this.name = name;
+        return this;
+    }
     /**
      * Set target value that should be reached when data animation finish then call {@link Chart#startDataAnimation()}
      *
