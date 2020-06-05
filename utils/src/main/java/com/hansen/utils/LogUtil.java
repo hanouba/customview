@@ -2,6 +2,8 @@ package com.hansen.utils;
 
 import android.util.Log;
 
+import com.blankj.utilcode.util.ConvertUtils;
+
 /**
  * @author HanN on 2020/5/20 10:16
  * @email: 1356548475@qq.com
@@ -75,4 +77,6 @@ public class LogUtil {
             Log.w(object.getClass().getSimpleName(), "thread-" + Thread.currentThread().getName() + "_" + Thread.currentThread().getId() + "   message- " + msg);
         }
     }
+
+
 }
