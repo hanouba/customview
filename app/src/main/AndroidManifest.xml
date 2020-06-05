@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mpandroidchart.MultiDatasetActivity"></activity>
+        <activity android:name=".mpandroidchart.JNChartActivity"></activity>
+        <activity android:name=".mpandroidchart.MultiDatasetActivity" />
         <activity android:name=".mpandroidchart.MpAndroidActivity" />
         <activity android:name=".activity.Recycle2Activity" />
         <activity android:name=".activity.RecyclerActivity" />

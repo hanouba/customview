@@ -86,6 +86,10 @@ public class MultiDatasetActivity extends AppCompatActivity implements OnChartVa
         ValueFormatter ix = new MyXAxisValueFormatter(xlabelDataList);
         chart.getXAxis().setValueFormatter(ix);
 
+
+
+
+
         BarDataSet set1, set2;
 
         if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {

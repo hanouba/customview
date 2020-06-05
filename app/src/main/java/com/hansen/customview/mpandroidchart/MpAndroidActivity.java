@@ -26,127 +26,37 @@ import com.google.gson.Gson;
 import com.hansen.customview.R;
 import com.hansen.customview.hellochart.UnDoneChartBean;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MpAndroidActivity extends AppCompatActivity implements OnChartValueSelectedListener {
-    private BarChart mBarChart;
+    private BarChart chart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mp_android);
-        mBarChart = findViewById(R.id.view_barchart);
+        chart = findViewById(R.id.view_barchart);
 
-//        mBarChart.getDescription().setEnabled(false);
-//
-//        // if more than 60 entries are displayed in the chart, no values will be
-//        // drawn
-//        mBarChart.setMaxVisibleValueCount(40);
-//
-//        // scaling can now only be done on x- and y-axis separately
-//        mBarChart.setPinchZoom(false);
-//
-//        mBarChart.setDrawGridBackground(false);
-//        mBarChart.setDrawBarShadow(false);
-//        mBarChart.animateY(1500); // 动画
-//        mBarChart.setDrawValueAboveBar(false);
-//        mBarChart.setHighlightFullBarEnabled(false);
-//
-//        mBarChart.setOnChartValueSelectedListener(this);
-//        mBarChart.getAxisRight().setEnabled(false);
-//        mBarChart.setTouchEnabled(false);
-//
-//
-//        YAxis leftAxis = mBarChart.getAxisLeft();
-//        leftAxis.setDrawGridLines(false);
-//        leftAxis.setValueFormatter(new IAxisValueFormatter() {
-//            @Override
-//            public String getFormattedValue(float value, AxisBase axis) {
-//                int n = (int) value;
-//                return n + "";
-//            }
-//        });
-//        leftAxis.setSpaceTop(35f);
-//        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-//
-//        XAxis xLabels = mBarChart.getXAxis();
-//        xLabels.setPosition(XAxis.XAxisPosition.BOTTOM);
-//        xLabels.setDrawLabels(true);
-//        xLabels.setDrawGridLines(false);
-//        xLabels.setGranularity(1f);
-//        //        xLabels.setCenterAxisLabels();
-//        xLabels.setCenterAxisLabels(true);//字体下面的标签 显示在每个直方图的中间
-//
-//
-//        Legend l = mBarChart.getLegend();
-//        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-//        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-//        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-//        l.setDrawInside(true);
-//        l.setFormSize(8f);
-//        l.setFormToTextSpace(4f);
-//        l.setXEntrySpace(6f);
-//
-//        l.setEnabled(false);
-
-
-        mBarChart.setPinchZoom(false);
-
-        mBarChart.setDrawGridBackground(false);
-        mBarChart.setDrawBarShadow(false);
-        mBarChart.animateY(1500); // 动画
-        mBarChart.setDrawValueAboveBar(false);
-        mBarChart.setHighlightFullBarEnabled(false);
-
-        mBarChart.getAxisRight().setEnabled(false);
-        mBarChart.setTouchEnabled(false);
-
-        Legend l = mBarChart.getLegend();
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        l.setOrientation(Legend.LegendOrientation.VERTICAL);
-        l.setDrawInside(true);
-        l.setYOffset(0f);
-        l.setXOffset(10f);
-        l.setYEntrySpace(0f);
-        l.setTextSize(8f);
-
-        XAxis xAxis = mBarChart.getXAxis();
-
-        xAxis.setGranularity(1f);
-        xAxis.setCenterAxisLabels(true);
-        xAxis.setValueFormatter(new ValueFormatter() {
-
-            @Override
-            public String getFormattedValue(float value) {
-                int n = (int) value;
-                return n + "";
-            }
-        });
-
-        YAxis leftAxis = mBarChart.getAxisLeft();
-        leftAxis.setValueFormatter(new LargeValueFormatter());
-        leftAxis.setDrawGridLines(false);
-        leftAxis.setSpaceTop(35f);
-        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-
-        mBarChart.getAxisRight().setEnabled(false);
-        setData();
+        initBarChar();
+        initData();
     }
 
-    private ArrayList<String> xlabelDataList = new ArrayList<>();
 
-    private void setData() {
-        xlabelDataList.clear();
-        String testdata = "{    \"data\": {        \"dataList\": [            {                \"unArrivedCount\": \"3\",                \"arrivedCount\": \"2\",                \"USERNAME\": \"维护组长\",                \"EXT_REPAIR_UID\": \"001402_维护组长\",                \"allCount\": \"5\"            },            {                \"unArrivedCount\": \"4\",                \"arrivedCount\": \"6\",                \"USERNAME\": \"张小帅\",                \"EXT_REPAIR_UID\": \"001402_张小帅\",                \"allCount\": \"10\"            }        ]    },    \"msg\": \"\",    \"id\": \":RO;\",    \"result\": \"ok\"}";
+
+    private void initData() {
+        String testdata = "{    \"data\": {        \"dataList\": [            {                \"unArrivedCount\": \"30\",                \"arrivedCount\": \"10\",                \"USERNAME\": \"维护组长\",                \"EXT_REPAIR_UID\": \"001402_维护组长\",                \"allCount\": \"40\"            },            {                \"unArrivedCount\": \"12\",                \"arrivedCount\": \"15\",                \"USERNAME\": \"张小帅\",                \"EXT_REPAIR_UID\": \"001402_张小帅\",                \"allCount\": \"27\"            }        ]    },    \"msg\": \"\",    \"id\": \":RO;\",    \"result\": \"ok\"}";
         Gson gson = new Gson();
         UnDoneChartBean unDoneChart = gson.fromJson(testdata, UnDoneChartBean.class);
         List<UnDoneChartBean.DataBean.DataListBean> undoneOrderInfo = unDoneChart.getData().getDataList();
 
-        ArrayList<BarEntry> values1 = new ArrayList<>();
-        ArrayList<BarEntry> values2 = new ArrayList<>();
-        for (int i = 0; i < undoneOrderInfo.size(); i++) {
+        int groupCount = undoneOrderInfo.size();
+        int startYear = 0;
+        int endYear = startYear + groupCount;
+
+        ArrayList<BarEntry> values = new ArrayList<>();
+        for (int i = startYear; i < endYear; i++) {
 
             String unArrivedCount = undoneOrderInfo.get(i).getUnArrivedCount();
             String arrivedCount = undoneOrderInfo.get(i).getArrivedCount();
@@ -154,49 +64,94 @@ public class MpAndroidActivity extends AppCompatActivity implements OnChartValue
             float val2 = Float.valueOf(arrivedCount);
             //            float val3 = (float) (Math.random() * mul) + mul / 3;
 
-            values1.add(new BarEntry(i, val1));
-            values2.add(new BarEntry(i, val2));
-
+            values.add(new BarEntry(i,  new float[]{val1, val2}));
         }
 
-        for (int j = 0; j <undoneOrderInfo.size(); j++) {
-            xlabelDataList.add(undoneOrderInfo.get(j).getUSERNAME());
-        }
 
-        ValueFormatter ix = new MyXAxisValueFormatter(xlabelDataList);
-        mBarChart.getXAxis().setValueFormatter(ix);
 
-        BarDataSet set1, set2;
 
-        if (mBarChart.getData() != null &&
-                mBarChart.getData().getDataSetCount() > 0) {
-            set1 = (BarDataSet) mBarChart.getData().getDataSetByIndex(0);
-            set2 = (BarDataSet) mBarChart.getData().getDataSetByIndex(1);
-            set1.setValues(values1);
-            set2.setValues(values2);
-            mBarChart.getData().notifyDataChanged();
-            mBarChart.notifyDataSetChanged();
+
+        BarDataSet set1;
+
+        if (chart.getData() != null &&
+                chart.getData().getDataSetCount() > 0) {
+            set1 = (BarDataSet) chart.getData().getDataSetByIndex(0);
+            set1.setValues(values);
+            chart.getData().notifyDataChanged();
+            chart.notifyDataSetChanged();
         } else {
-            set1 = new BarDataSet(values1, "");
-            set1.setColors(Color.parseColor("#FEA213"));
+            set1 = new BarDataSet(values, "Statistics Vienna 2014");
+            set1.setDrawIcons(false);
+            set1.setColors(getColors());
 
-            set2 = new BarDataSet(values1, "");
-            set2.setColors(Color.parseColor("#16ADF6"));
 
             ArrayList<IBarDataSet> dataSets = new ArrayList<>();
             dataSets.add(set1);
-            dataSets.add(set2);
 
-            BarData data = new BarData(set1,set2);
-            data.setValueFormatter(new LargeValueFormatter());
+            BarData data = new BarData(dataSets);
+            //true 数据块分开显示 false  数据显示总数  decimals 数据精度
+            data.setValueFormatter(new StackedValueFormatter(true, "", 0));
             data.setValueTextColor(Color.WHITE);
-
-            mBarChart.setData(data);
+            data.setValueTextSize(10f);
+            chart.setData(data);
         }
 
-        mBarChart.setFitBars(true);
-        mBarChart.invalidate();
+        chart.setFitBars(true);
+        chart.invalidate();
     }
+
+
+
+
+    private void initBarChar() {
+
+
+        chart.getDescription().setEnabled(false);
+        chart.setPinchZoom(false);
+        chart.setTouchEnabled(false);
+        chart.setDrawBarShadow(false);
+        chart.animateY(1500);
+        chart.setDrawValueAboveBar(false);
+        chart.setDrawGridBackground(false);
+        chart.setHighlightFullBarEnabled(false);
+
+        Legend l = chart.getLegend();
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        l.setOrientation(Legend.LegendOrientation.VERTICAL);
+        l.setDrawInside(true);
+        l.setYOffset(0f);
+        l.setYEntrySpace(0f);
+        l.setTextSize(10f);
+        l.setEnabled(false);
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setGranularity(1f);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setAxisLineColor(getResources().getColor(R.color.colorAccent));
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setTextSize(10f);
+
+
+        chart.getAxisRight().setEnabled(false);
+        xAxis.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);
+            }
+        });
+
+
+        YAxis leftAxis = chart.getAxisLeft();
+
+        leftAxis.setValueFormatter(new LargeValueFormatter());
+        leftAxis.setSpaceTop(35f);
+        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        leftAxis.setTextSize(10f);
+        leftAxis.setDrawGridLines(false);
+
+    }
+
 
     @Override
     public void onValueSelected(Entry e, Highlight h) {
@@ -209,18 +164,7 @@ public class MpAndroidActivity extends AppCompatActivity implements OnChartValue
     }
 
 
-    private int[] getColors() {
-
-        // have as many colors as stack-values per entry
-        int[] colors = new int[2];
-
-        System.arraycopy(ColorTemplate.MATERIAL_COLORS, 0, colors, 0, 2);
-
-        return colors;
-    }
-
-
-    public class MyXAxisValueFormatter extends ValueFormatter {
+    public class MyXAxisValueFormatter extends ValueFormatter  {
 
         private List<String> mValues;
 
@@ -229,7 +173,7 @@ public class MpAndroidActivity extends AppCompatActivity implements OnChartValue
         }
 
         @Override
-        public String getFormattedValue(float value) {
+        public String getFormattedValue(float value, AxisBase axis) {
             int x = (int) (value);
             if (x < 0)
                 x = 0;
@@ -237,5 +181,16 @@ public class MpAndroidActivity extends AppCompatActivity implements OnChartValue
                 x = mValues.size() - 1;
             return mValues.get(x);
         }
+    }
+
+
+    private int[] getColors() {
+
+        // have as many colors as stack-values per entry
+        int[] colors = new int[2];
+
+        System.arraycopy(ColorTemplate.MATERIAL_COLORS, 0, colors, 0, 2);
+
+        return colors;
     }
 }
