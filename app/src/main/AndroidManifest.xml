@@ -2,8 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hansen.customview">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".BaseApp"
         android:allowBackup="true"
@@ -12,8 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mpandroidchart.VideoRateActivity"
-            ></activity>
+        <activity android:name=".test.TestActivity"></activity>
+        <activity
+            android:name=".hankchart.HankActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".mpandroidchart.VideoRateActivity" />
         <activity android:name=".mpandroidchart.VideoLineActivity" />
         <activity android:name=".mpandroidchart.JNChartActivity" />
         <activity android:name=".mpandroidchart.MultiDatasetActivity" />

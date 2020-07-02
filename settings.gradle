@@ -1,2 +1,2 @@
-include ':app', ':stextlib', ':utils', ':recyclerlib', ':hellochart_lib', ':headbubblelib', ':search'
+include ':app', ':stextlib', ':utils', ':recyclerlib', ':hellochart_lib', ':headbubblelib', ':search', ':hackplancharts'
 rootProject.name='customview'

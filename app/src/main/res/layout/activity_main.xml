@@ -32,4 +32,10 @@
         android:text="hellochart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:onClick="toHankChart"
+        android:text="hankChart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

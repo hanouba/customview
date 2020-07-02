@@ -12,6 +12,7 @@ import android.view.View;
 import com.hansen.customview.greendao.DaoMaster;
 import com.hansen.customview.greendao.DaoSession;
 import com.hansen.customview.greendao.VideoDateInfoBeanDao;
+import com.hansen.customview.hankchart.HankActivity;
 import com.hansen.customview.mpandroidchart.GreenHelper;
 import com.hansen.customview.mpandroidchart.JNChartActivity;
 import com.hansen.customview.mpandroidchart.MpAndroidActivity;
@@ -65,4 +66,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void toHankChart(View view) {
+        startActivity(new Intent(this, HankActivity.class));
+    }
 }

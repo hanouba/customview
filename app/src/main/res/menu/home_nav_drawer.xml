@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/nav_item1"
+        android:title="线条数据"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/nav_item2"
+        android:title="柱状视图"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/nav_item3"
+        android:title="合体"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/nav_item4"
+        android:title="Toggle axes"
+        app:showAsAction="never"/>
+</menu>
