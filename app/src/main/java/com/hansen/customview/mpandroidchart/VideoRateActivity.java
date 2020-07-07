@@ -17,9 +17,12 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.dataprovider.LineDataProvider;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
 import com.hansen.customview.MainActivity;
@@ -73,15 +76,24 @@ public class VideoRateActivity extends AppCompatActivity {
             // create a dataset and give it a type
             set1 = new LineDataSet(values1, "DataSet 1");
 
-            set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-            set1.setColor(ColorTemplate.getHoloBlue());
+            set1.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+            set1.setCubicIntensity(0.2f);
+            set1.setDrawFilled(true);
+            set1.setDrawCircles(true);
+            set1.setLineWidth(1.8f);
+            set1.setCircleRadius(4f);
             set1.setCircleColor(Color.WHITE);
-            set1.setLineWidth(2f);
-            set1.setCircleRadius(3f);
-            set1.setFillAlpha(65);
-            set1.setFillColor(ColorTemplate.getHoloBlue());
             set1.setHighLightColor(Color.rgb(244, 117, 117));
-            set1.setDrawCircleHole(false);
+            set1.setColor(Color.WHITE);
+            set1.setFillColor(Color.WHITE);
+            set1.setFillAlpha(100);
+            set1.setDrawHorizontalHighlightIndicator(false);
+            set1.setFillFormatter(new IFillFormatter() {
+                @Override
+                public float getFillLinePosition(ILineDataSet dataSet, LineDataProvider dataProvider) {
+                    return chart.getAxisLeft().getAxisMinimum();
+                }
+            });
 
 
             // create a data object with the data sets
@@ -106,7 +118,6 @@ public class VideoRateActivity extends AppCompatActivity {
 
         // no description text
         chart.getDescription().setEnabled(false);
-
         // enable touch gestures
         chart.setTouchEnabled(true);
 
@@ -116,6 +127,7 @@ public class VideoRateActivity extends AppCompatActivity {
         chart.setDragEnabled(false);
         chart.setScaleEnabled(false);
         chart.setDrawGridBackground(false);
+        chart.setMaxHighlightDistance(300);
         chart.setHighlightPerDragEnabled(false);
 
         // if disabled, scaling can be done on x- and y-axis separately

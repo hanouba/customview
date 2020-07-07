@@ -38,4 +38,10 @@
         android:text="hankChart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <Button
+        android:onClick="toRxjava"
+        android:text="RxJava2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

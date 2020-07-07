@@ -17,6 +17,8 @@ import com.hansen.customview.mpandroidchart.GreenHelper;
 import com.hansen.customview.mpandroidchart.JNChartActivity;
 import com.hansen.customview.mpandroidchart.MpAndroidActivity;
 import com.hansen.customview.mpandroidchart.VideoRateActivity;
+import com.hansen.customview.test.TestActivity;
+import com.hansen.rxjava.RxjavaActivity;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -67,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void toHankChart(View view) {
-        startActivity(new Intent(this, HankActivity.class));
+        startActivity(new Intent(this, TestActivity.class));
+    }
+
+    public void toRxjava(View view) {
+        startActivity(new Intent(this, RxjavaActivity.class));
     }
 }
