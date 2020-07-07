@@ -36,6 +36,11 @@ public class TestActivity extends AppCompatActivity {
     private SimpleDateFormat mFormatterYear = new SimpleDateFormat("yyyy");
     private Calendar calendar;
     private FLowLineView flowLineView;
+    //当前进度节点 默认是0
+    private int flowTAG = 0;
+    //存放节点数据
+    List<FlowChart> charts = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +52,11 @@ public class TestActivity extends AppCompatActivity {
         currentMonth = mFormatterMonth.format(currentTime);
         tvTime = findViewById(R.id.tv_time);
         tvTime.setText(currentYear+"--"+currentMonth);
-
-
-        initFlowView();
-
     }
-    private int flowTAG = 0;
-    List<FlowChart> charts = new ArrayList<>();
+
     private void initFlowView() {
 
-        flowLineView = findViewById(R.id.flow_line_view);
+//        flowLineView = findViewById(R.id.flow_line_view);
         String abnormalProcess = "[{\"name\":\"报障\",\"status\":\"0\"},{\"name\":\"报修\",\"status\":\"0\"},{\"name\":\"工单\",\"status\":\"0\"}]";
 
 
