@@ -194,6 +194,74 @@ public class MinionView extends View {
         pts[18] = pts[16] + w;
         pts[19] = pts[17];
         canvas.drawLines(pts, mPaint);
+
+        // 画左边的吊带
+        mPaint.setColor(colorClothes);
+        mPaint.setStrokeWidth(mStrokeWidth);
+        mPaint.setStyle(Paint.Style.FILL);
+        path.reset();
+        path.moveTo(rect.left - w - offset, handsHeight);
+        path.lineTo(rect.left + h / 4f, rect.top + h / 2f);
+        final float smallW = w / 2f * (float) Math.sin(Math.PI / 4);
+        path.lineTo(rect.left + h / 4f + smallW, rect.top + h / 2f - smallW);
+        final float smallW2 = w / (float) Math.sin(Math.PI / 4) / 2;
+        path.lineTo(rect.left - w - offset, handsHeight - smallW2);
+        canvas.drawPath(path, mPaint);
+        mPaint.setColor(colorStroke);
+        mPaint.setStrokeWidth(mStrokeWidth);
+        mPaint.setStyle(Paint.Style.STROKE);
+        canvas.drawPath(path, mPaint);
+        mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+        canvas.drawCircle(rect.left + h / 5f, rect.top + h / 4f, mStrokeWidth * 0.7f, mPaint);
+
+        // 画右吊带，代码和左吊带差不多，坐标对称
+        mPaint.setColor(colorClothes);
+        mPaint.setStrokeWidth(mStrokeWidth);
+        mPaint.setStyle(Paint.Style.FILL);
+        path.reset();
+        path.moveTo(rect.left - w + 2 * radius - offset, handsHeight);
+        path.lineTo(rect.right - h / 4f, rect.top + h / 2f);
+        path.lineTo(rect.right - h / 4f - smallW, rect.top + h / 2f - smallW);
+        path.lineTo(rect.left - w + 2 * radius - offset, handsHeight- smallW2);
+
+        canvas.drawPath(path, mPaint);
+        mPaint.setColor(colorStroke);
+        mPaint.setStrokeWidth(mStrokeWidth);
+        mPaint.setStyle(Paint.Style.STROKE);
+        canvas.drawPath(path, mPaint);
+
+        mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        canvas.drawCircle(rect.right - h / 5f, rect.top + h / 4f, mStrokeWidth * 0.7f, mPaint);
+
+        // 中间口袋
+        mPaint.setColor(colorStroke);
+        mPaint.setStrokeWidth(mStrokeWidth);
+        mPaint.setStyle(Paint.Style.STROKE);
+
+        path.reset();
+        float radiusBigPocket = w / 2.0f;
+        path.moveTo(rect.left + 1.5f * w, rect.bottom - h / 4f);
+        path.lineTo(rect.right - 1.5f * w, rect.bottom - h / 4f);
+        path.lineTo(rect.right - 1.5f * w, rect.bottom + h / 4f);
+        path.addArc(rect.right - 1.5f * w - radiusBigPocket * 2, rect.bottom + h / 4f - radiusBigPocket,
+                rect.right - 1.5f * w, rect.bottom + h / 4f + radiusBigPocket, 0, 90);
+        path.lineTo(rect.left + 1.5f * w + radiusBigPocket, rect.bottom + h / 4f + radiusBigPocket);
+
+        path.addArc(rect.left + 1.5f * w, rect.bottom + h / 4f - radiusBigPocket,
+                rect.left + 1.5f * w + 2 * radiusBigPocket, rect.bottom + h / 4f + radiusBigPocket, 90, 90);
+        path.lineTo(rect.left + 1.5f * w, rect.bottom - h / 4f - offset);
+        canvas.drawPath(path, mPaint);
+
+        // 下边一竖，分开裤子
+        canvas.drawLine(bodyRect.left + bodyWidth / 2, bodyRect.bottom - h * 0.8f, bodyRect.left + bodyWidth / 2, bodyRect.bottom, mPaint);
+        // 左边的小口袋
+        float radiusSmallPocket = w * 1.2f;
+        canvas.drawArc(bodyRect.left - radiusSmallPocket, bodyRect.bottom - radius - radiusSmallPocket,
+                bodyRect.left + radiusSmallPocket, bodyRect.bottom - radius + radiusSmallPocket, 80, -60, false, mPaint);
+        // 右边小口袋
+        canvas.drawArc(bodyRect.right - radiusSmallPocket, bodyRect.bottom - radius - radiusSmallPocket,
+                bodyRect.right + radiusSmallPocket, bodyRect.bottom - radius + radiusSmallPocket, 100, 60, false, mPaint);
     }
 
     private void drawBodyStroke(Canvas canvas) {
