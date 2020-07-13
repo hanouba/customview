@@ -1,6 +1,7 @@
 package com.hansen.rxjava;
 
 import com.hansen.customview.bean.Translation;
+import com.hansen.customview.bean.Translation2;
 
 
 import io.reactivex.Observable;
@@ -17,8 +18,11 @@ import retrofit2.http.GET;
  * @version: 2.1.67
  */
 public interface GetRequest_Interface {
-
+    //模拟注册
     @GET("ajax.php?a=fy&f=auto&t=auto&w=hi%20world")
     Observable<Translation> getCall();
+    //模拟登陆
+    @GET("ajax.php?a=fy&f=auto&t=auto&w=hi%20world")
+    Observable<Translation2> getCall_2();
 
 }
