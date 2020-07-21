@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hansen.customview.flowlayout.LanuchActivity;
 import com.hansen.customview.greendao.DaoMaster;
 import com.hansen.customview.greendao.DaoSession;
 import com.hansen.customview.greendao.VideoDateInfoBeanDao;
@@ -17,6 +18,7 @@ import com.hansen.customview.hankchart.HankActivity;
 import com.hansen.customview.mpandroidchart.GreenHelper;
 import com.hansen.customview.mpandroidchart.JNChartActivity;
 import com.hansen.customview.mpandroidchart.MpAndroidActivity;
+import com.hansen.customview.mpandroidchart.SmallChartActivity;
 import com.hansen.customview.mpandroidchart.VideoRateActivity;
 import com.hansen.customview.test.TestActivity;
 import com.hansen.rxjava.RxjavaActivity;
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void impRecyclerView(View view) {
-        startActivity(new Intent(this, VideoRateActivity.class));
+        startActivity(new Intent(this, SmallChartActivity.class));
     }
 
     public void toHelloChart(View view) {
@@ -76,5 +78,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void toRxjava(View view) {
         startActivity(new Intent(this, RxjavaActivity.class));
+    }
+
+    public void flowlayout(View view) {
+        startActivity(new Intent(this, LanuchActivity.class));
     }
 }

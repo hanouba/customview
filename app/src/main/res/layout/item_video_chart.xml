@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    app:cardCornerRadius="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/iv_chart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_chart_video"></ImageView>
+
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textSize="15sp"
+            android:textColor="#323232"
+            android:layout_toRightOf="@id/iv_chart"
+            android:text="视频在线率"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textSize="10sp"
+            android:textColor="#5D6379"
+            android:layout_toRightOf="@id/tv_item_name"
+            android:text="在线 795/1900"></TextView>
+
+
+        <TextView
+            android:id="@+id/tv_rate"
+            android:layout_alignParentRight="true"
+            android:text="98.26%"
+            android:textSize="15sp"
+            android:textColor="#313131"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></TextView>
+        
+        <com.github.mikephil.charting.charts.LineChart
+            android:layout_width="45dp"
+            android:id="@+id/line_chart"
+            android:layout_toLeftOf="@id/tv_rate"
+            android:layout_marginRight="12dp"
+            android:layout_height="25dp">
+
+        </com.github.mikephil.charting.charts.LineChart>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

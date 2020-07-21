@@ -5,4 +5,9 @@
     <color name="colorAccent">#D81B60</color>
     <color name="common_pressed">#D81B60</color>
     <color name="white">#ffffff</color>
+
+    <color name="color_blue">#0B8FFE</color>
+    <color name="color_3BD134">#3BD134</color>
+    <color name="transparent">#00000000</color>
+    <item name="transparent" type="drawable">#00000000</item>
 </resources>

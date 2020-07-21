@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hansen.customview">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -13,7 +14,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.hansen.rxjava.RxjavaActivity"></activity>
+        <activity android:name=".mpandroidchart.SmallChartActivity"></activity>
+        <activity
+            android:name="com.hansen.rxjava.ui.login.LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity android:name="com.hansen.rxjava.RxjavaActivity" />
         <activity android:name=".test.TestActivity" />
         <activity
             android:name=".hankchart.HankActivity"
@@ -33,6 +38,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".hellochart.ColumnChartActivity" />
+
+<!--        流式布局-->
+        <activity android:name=".flowlayout.LanuchActivity"/>
+        <activity android:name=".flowlayout.TextFlowActivity" />
+        <activity android:name=".flowlayout.PhotoFlowActivity" />
+        <activity android:name=".flowlayout.DiffHeightTextFlowActivity" />
+        <activity android:name=".flowlayout.ProductActivity" />
+        <activity android:name=".flowlayout.SuspensionProductActivity" />
     </application>
 
 </manifest>

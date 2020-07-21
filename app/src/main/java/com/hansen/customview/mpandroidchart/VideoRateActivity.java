@@ -41,24 +41,20 @@ import java.util.List;
  */
 public class VideoRateActivity extends AppCompatActivity {
     private LineChart chart;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_rate2);
         initView();
         initBarChar();
-
         initData();
-
     }
     private void initData() {
 
 
         ArrayList<Entry> values1 = new ArrayList<>();
 
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 10; i++) {
             float val = (float) (Math.random() * (20 / 2f)) + 50;
             values1.add(new Entry(i, val));
         }
@@ -81,7 +77,7 @@ public class VideoRateActivity extends AppCompatActivity {
             set1.setDrawFilled(true);
             set1.setDrawCircles(true);
             set1.setLineWidth(1.8f);
-            set1.setCircleRadius(4f);
+            set1.setCircleRadius(1f);
             set1.setCircleColor(Color.WHITE);
             set1.setHighLightColor(Color.rgb(244, 117, 117));
             set1.setColor(Color.WHITE);
@@ -115,21 +111,18 @@ public class VideoRateActivity extends AppCompatActivity {
 
 
     private void initBarChar() {
-
         // no description text
         chart.getDescription().setEnabled(false);
         // enable touch gestures
         chart.setTouchEnabled(true);
-
         chart.setDragDecelerationFrictionCoef(0.9f);
-
         // enable scaling and dragging
         chart.setDragEnabled(false);
         chart.setScaleEnabled(false);
         chart.setDrawGridBackground(false);
-        chart.setMaxHighlightDistance(300);
+//        chart.setMaxHighlightDistance(300);
         chart.setHighlightPerDragEnabled(false);
-
+        chart.setExtraOffsets(1,1,1,1);
         // if disabled, scaling can be done on x- and y-axis separately
         chart.setPinchZoom(false);
 
@@ -149,18 +142,16 @@ public class VideoRateActivity extends AppCompatActivity {
         //        l.setYOffset(11f);
 
         XAxis xAxis = chart.getXAxis();
-        xAxis.setTextSize(11f);
+        xAxis.setTextSize(1f);
         xAxis.setTextColor(Color.WHITE);
         xAxis.setDrawGridLines(false);
         xAxis.setDrawAxisLine(false);
-
-
-        ValueFormatter xAxisFormatter = new DayAxisValueFormatter(chart);
+        xAxis.setEnabled(false);
 
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1);
 
-        xAxis.setValueFormatter(xAxisFormatter);
+
 
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setEnabled(false);

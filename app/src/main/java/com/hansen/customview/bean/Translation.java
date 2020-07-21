@@ -28,4 +28,19 @@ public class Translation {
         Log.d("RxJava", content.out );
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public Translation.content getContent() {
+        return content;
+    }
+
+    public void setContent(Translation.content content) {
+        this.content = content;
+    }
 }
