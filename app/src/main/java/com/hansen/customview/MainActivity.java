@@ -18,6 +18,7 @@ import com.hansen.customview.hankchart.HankActivity;
 import com.hansen.customview.mpandroidchart.GreenHelper;
 import com.hansen.customview.mpandroidchart.JNChartActivity;
 import com.hansen.customview.mpandroidchart.MpAndroidActivity;
+import com.hansen.customview.mpandroidchart.MultiDatasetActivity;
 import com.hansen.customview.mpandroidchart.SmallChartActivity;
 import com.hansen.customview.mpandroidchart.VideoRateActivity;
 import com.hansen.customview.test.TestActivity;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void impRecyclerView(View view) {
-        startActivity(new Intent(this, SmallChartActivity.class));
+        startActivity(new Intent(this, MultiDatasetActivity.class));
     }
 
     public void toHelloChart(View view) {

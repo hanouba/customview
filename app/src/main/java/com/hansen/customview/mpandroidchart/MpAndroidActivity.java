@@ -30,6 +30,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * barchart
+ */
 public class MpAndroidActivity extends AppCompatActivity implements OnChartValueSelectedListener {
     private BarChart chart;
 

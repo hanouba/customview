@@ -45,13 +45,18 @@ public class MultiDatasetActivity extends AppCompatActivity implements OnChartVa
 
     private void initData() {
 
-        String testdata = "{    \"data\": {        \"dataList\": [            {                \"unArrivedCount\": \"1\",                \"arrivedCount\": \"1\",                \"USERNAME\": \"维护组长\",                \"EXT_REPAIR_UID\": \"001402_维护组长\",                \"allCount\": \"0\"            },            {                \"unArrivedCount\": \"1\",                \"arrivedCount\": \"0\",                \"USERNAME\": \"张小帅\",                \"EXT_REPAIR_UID\": \"001402_张小帅\",                \"allCount\": \"10\"            }        ]    },    \"msg\": \"\",    \"id\": \":RO;\",    \"result\": \"ok\"}";
+        String testdata = "{    \"data\": {        \"dataList\": [            {                \"unArrivedCount\": \"5\",                \"arrivedCount\": \"6\",                \"USERNAME\": \"维护组长\",                \"EXT_REPAIR_UID\": \"001402_维护组长\",                \"allCount\": \"0\"            },            {                \"unArrivedCount\": \"7\",                \"arrivedCount\": \"8\",                \"USERNAME\": \"张小帅\",                \"EXT_REPAIR_UID\": \"001402_张小帅\",                \"allCount\": \"10\"            }        ]    },    \"msg\": \"\",    \"id\": \":RO;\",    \"result\": \"ok\"}";
+        String testData = "{\t\"data\": {\t\t\"countWorkInTime\": [{\t\t\t\"NAME\": \"何行\",\t\t\t\"PHOTO\": \"./df?groupValue=%E4%BD%95%E8%A1%8C&fileValue=a2e0f963-4d69-4a89-88fd-fbcc91de11fe&sid=&repositoryName=%21photo-&appId=_bpm.platform&attachment=true&fileName=%E4%BD%95%E8%A1%8C.png&lastModified=1595400275000&lastModified=1595400275000\",\t\t\t\"UID\": \"何行\",\t\t\t\"COUNT\": \"100.00%\"\t\t}, {\t\t\t\"UID\": \"卢峰\",\t\t\t\"photo\": \"../commons/img/photo.png\",\t\t\t\"COUNT\": \"0.00%\",\t\t\t\"NAME\": \"卢峰\"\t\t}, {\t\t\t\"UID\": \"孙大为\",\t\t\t\"photo\": \"../commons/img/photo.png\",\t\t\t\"COUNT\": \"0.00%\",\t\t\t\"NAME\": \"孙大为\"\t\t}],\t\t\"countReplaceInfo\": [{\t\t\t\"NAME\": \"何行\",\t\t\t\"PHOTO\": \"./df?groupValue=%E4%BD%95%E8%A1%8C&fileValue=a2e0f963-4d69-4a89-88fd-fbcc91de11fe&sid=&repositoryName=%21photo-&appId=_bpm.platform&attachment=true&fileName=%E4%BD%95%E8%A1%8C.png&lastModified=1595400275000&lastModified=1595400275000\",\t\t\t\"UID\": \"何行\",\t\t\t\"COUNT\": 6\t\t}, {\t\t\t\"NAME\": \"卢峰\",\t\t\t\"PHOTO\": \"../commons/img/photo.png\",\t\t\t\"UID\": \"卢峰\",\t\t\t\"COUNT\": 1\t\t}, {\t\t\t\"NAME\": \"孙大为\",\t\t\t\"PHOTO\": \"../commons/img/photo.png\",\t\t\t\"UID\": \"孙大为\",\t\t\t\"COUNT\": 1\t\t}]\t},\t\"msg\": \"\",\t\"id\": \":RO;\",\t\"result\": \"ok\"}";
         Gson gson = new Gson();
         UnDoneChartBean unDoneChart = gson.fromJson(testdata, UnDoneChartBean.class);
         List<UnDoneChartBean.DataBean.DataListBean> undoneOrderInfo = unDoneChart.getData().getDataList();
-        float groupSpace = 0.1f;
-        float barSpace =0.0f; // x4 DataSet
-        float barWidth = 0.45f;
+
+
+
+        float groupSpace = 0.08f;
+        float barSpace =0.06f; // x4 DataSet
+        float barWidth = 0.4f;
+        float val1 = 0;
         // (0.4 + 0.06) * 2 + 0.08 = 1.00 -> interval per "group"
         int groupCount = undoneOrderInfo.size();
         int startYear = 0;
@@ -59,7 +64,7 @@ public class MultiDatasetActivity extends AppCompatActivity implements OnChartVa
 
 
         ArrayList<BarEntry> values1 = new ArrayList<>();
-        ArrayList<BarEntry> values2 = new ArrayList<>();
+
 
 
 
@@ -67,15 +72,19 @@ public class MultiDatasetActivity extends AppCompatActivity implements OnChartVa
         for (int i = startYear; i < endYear; i++) {
 //            values1.add(new BarEntry(i, (float) (Math.random() * randomMultiplier)));
 //            values2.add(new BarEntry(i, (float) (Math.random() * randomMultiplier)));
+            if (i == 0) {
+                 val1 = Float.valueOf(0);
+            }else {
+                String unArrivedCount = undoneOrderInfo.get(i-1).getUnArrivedCount();
 
-            String unArrivedCount = undoneOrderInfo.get(i).getUnArrivedCount();
-            String arrivedCount = undoneOrderInfo.get(i).getArrivedCount();
-            float val1 = Float.valueOf(unArrivedCount);
-            float val2 = Float.valueOf(arrivedCount);
+                val1 = Float.valueOf(unArrivedCount);
+            }
+
+
             //            float val3 = (float) (Math.random() * mul) + mul / 3;
 
             values1.add(new BarEntry(i, val1));
-            values2.add(new BarEntry(i, val2));
+
         }
 
 
@@ -95,10 +104,10 @@ public class MultiDatasetActivity extends AppCompatActivity implements OnChartVa
         if (chart.getData() != null && chart.getData().getDataSetCount() > 0) {
 
             set1 = (BarDataSet) chart.getData().getDataSetByIndex(0);
-            set2 = (BarDataSet) chart.getData().getDataSetByIndex(1);
+
 
             set1.setValues(values1);
-            set2.setValues(values2);
+
 
             chart.getData().notifyDataChanged();
             chart.notifyDataSetChanged();
@@ -107,11 +116,10 @@ public class MultiDatasetActivity extends AppCompatActivity implements OnChartVa
             // create 4 DataSets
             set1 = new BarDataSet(values1, "");
             set1.setColor(Color.rgb(29, 169, 241));
-            set2 = new BarDataSet(values2, "");
-            set2.setColor(Color.rgb(254, 162, 19));
 
 
-            BarData data = new BarData(set1, set2);
+
+            BarData data = new BarData(set1);
             data.setValueFormatter(new LargeValueFormatter());
             data.setValueTextSize(14f);
             chart.setData(data);
@@ -124,8 +132,7 @@ public class MultiDatasetActivity extends AppCompatActivity implements OnChartVa
         chart.getXAxis().setAxisMinimum(startYear);
 
         // barData.getGroupWith(...) is a helper that calculates the width each group needs based on the provided parameters
-        chart.getXAxis().setAxisMaximum(startYear + chart.getBarData().getGroupWidth(groupSpace, barSpace) * groupCount);
-        chart.groupBars(startYear, groupSpace, barSpace);
+//        chart.getXAxis().setAxisMaximum(startYear + chart.getBarData().getGroupWidth(groupSpace, barSpace) * groupCount);
         chart.invalidate();
     }
 
@@ -133,7 +140,7 @@ public class MultiDatasetActivity extends AppCompatActivity implements OnChartVa
         chart.setOnChartValueSelectedListener(this);
         chart.getDescription().setEnabled(false);
         chart.setPinchZoom(false);
-        chart.setTouchEnabled(false);
+        chart.setTouchEnabled(true);
         chart.setDrawBarShadow(false);
 
 
@@ -153,7 +160,7 @@ public class MultiDatasetActivity extends AppCompatActivity implements OnChartVa
         xAxis.setGranularity(1f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setAxisLineColor(getResources().getColor(R.color.colorAccent));
-        xAxis.setCenterAxisLabels(true);
+        xAxis.setCenterAxisLabels(false);
         xAxis.setTextSize(15f);
         xAxis.setValueFormatter(new ValueFormatter() {
             @Override
@@ -161,7 +168,7 @@ public class MultiDatasetActivity extends AppCompatActivity implements OnChartVa
                 return String.valueOf((int) value);
             }
         });
-
+        chart.zoom(4, 1f, 0, 0);
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setValueFormatter(new LargeValueFormatter());
         leftAxis.setDrawGridLines(false);
