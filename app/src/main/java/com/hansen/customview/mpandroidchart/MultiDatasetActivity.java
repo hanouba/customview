@@ -116,9 +116,6 @@ public class MultiDatasetActivity extends AppCompatActivity implements OnChartVa
             // create 4 DataSets
             set1 = new BarDataSet(values1, "");
             set1.setColor(Color.rgb(29, 169, 241));
-
-
-
             BarData data = new BarData(set1);
             data.setValueFormatter(new LargeValueFormatter());
             data.setValueTextSize(14f);
