@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author HanN on 2020/8/10 19:52
  * @email: 1356548475@qq.com
  * @project customview
- * @description:
+ * @description: 显示各种状态的view 断网 无数据, 错误,加载中等等
  * @updateuser:
  * @updatedata: 2020/8/10 19:52
  * @updateremark:
@@ -46,7 +46,7 @@ public class MultipleStatusView extends RelativeLayout {
     private int  mNoNetworkViewResId;
     private int  mContentViewResId;
 
-    private int             mViewStatus;
+    private int  mViewStatus;
     private LayoutInflater mInflater;
     private OnClickListener mOnRetryClickListener;
 

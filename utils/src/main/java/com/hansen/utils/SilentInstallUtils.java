@@ -10,6 +10,8 @@ import android.content.IntentFilter;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
 
+import android.content.pm.IPackageDeleteObserver;
+import android.content.pm.IPackageInstallObserver;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageInstaller;
 import android.content.pm.PackageManager;
@@ -261,28 +263,28 @@ public final class SilentInstallUtils {
         final CountDownLatch countDownLatch = new CountDownLatch(1);
 
 
-//        IPackageInstallObserver observer = new IPackageInstallObserver.Stub() {
-//            @Override
-//            public void packageInstalled(String packageName, int returnCode) {
-//                try {
-//                    result.set(returnCode == 1);
-//                } finally {
-//                    countDownLatch.countDown();
-//                }
-//            }
-//        };
-//
-//        try {
-//            installer.invoke(
-//                    context.getPackageManager(),
-//                    UriUtils.file2Uri(file),
-//                    observer,
-//                    0x00000002,//flag=2表示如果存在则覆盖升级)
-//                    context.getPackageName()
-//            );
-//        } catch (IllegalAccessException | InvocationTargetException ignored) {
-//            countDownLatch.countDown();
-//        }
+        IPackageInstallObserver observer = new IPackageInstallObserver.Stub() {
+            @Override
+            public void packageInstalled(String packageName, int returnCode) {
+                try {
+                    result.set(returnCode == 1);
+                } finally {
+                    countDownLatch.countDown();
+                }
+            }
+        };
+
+        try {
+            installer.invoke(
+                    context.getPackageManager(),
+                    UriUtils.file2Uri(file),
+                    observer,
+                    0x00000002,//flag=2表示如果存在则覆盖升级)
+                    context.getPackageName()
+            );
+        } catch (IllegalAccessException | InvocationTargetException ignored) {
+            countDownLatch.countDown();
+        }
 
         countDownLatch.await();
         return result.get();
@@ -300,24 +302,24 @@ public final class SilentInstallUtils {
         final AtomicBoolean result = new AtomicBoolean(false);
         final CountDownLatch countDownLatch = new CountDownLatch(1);
 //
-//        IPackageDeleteObserver observer = new IPackageDeleteObserver.Stub() {
-//            @Override
-//            public void packageDeleted(String packageName, int returnCode) {
-//                try {
-//                    result.set(returnCode == 1);
-//                } finally {
-//                    countDownLatch.countDown();
-//                }
-//            }
-//        };
-//
-//        try {
-//            deleter.invoke(
-//                    context.getPackageManager(),
-//                    packageName, observer, 0x00000002);
-//        } catch (IllegalAccessException | InvocationTargetException ignored) {
-//            countDownLatch.countDown();
-//        }
+        IPackageDeleteObserver observer = new IPackageDeleteObserver.Stub() {
+            @Override
+            public void packageDeleted(String packageName, int returnCode) {
+                try {
+                    result.set(returnCode == 1);
+                } finally {
+                    countDownLatch.countDown();
+                }
+            }
+        };
+
+        try {
+            deleter.invoke(
+                    context.getPackageManager(),
+                    packageName, observer, 0x00000002);
+        } catch (IllegalAccessException | InvocationTargetException ignored) {
+            countDownLatch.countDown();
+        }
 
         countDownLatch.await();
         return result.get();
@@ -404,26 +406,26 @@ public final class SilentInstallUtils {
     @Nullable
     private static Method getInstallPackageMethod() {
         if (sInstallPackage != null) return sInstallPackage;
-//        try {
-//            //noinspection JavaReflectionMemberAccess
-//            sInstallPackage = PackageManager.class.getMethod("installPackage",
-//                    Uri.class, IPackageInstallObserver.class, int.class, String.class);
-//            return sInstallPackage;
-//        } catch (NoSuchMethodException ignored) {
-//        }
+        try {
+            //noinspection JavaReflectionMemberAccess
+            sInstallPackage = PackageManager.class.getMethod("installPackage",
+                    Uri.class, IPackageInstallObserver.class, int.class, String.class);
+            return sInstallPackage;
+        } catch (NoSuchMethodException ignored) {
+        }
         return null;
     }
 
     @Nullable
     private static Method getDeletePackageMethod() {
         if (sDeletePackage != null) return sDeletePackage;
-//        try {
-//            //noinspection JavaReflectionMemberAccess
-//            sDeletePackage = PackageManager.class.getMethod("deletePackage",
-//                    String.class, IPackageDeleteObserver.class, int.class);
-//            return sDeletePackage;
-//        } catch (NoSuchMethodException ignored) {
-//        }
+        try {
+            //noinspection JavaReflectionMemberAccess
+            sDeletePackage = PackageManager.class.getMethod("deletePackage",
+                    String.class, IPackageDeleteObserver.class, int.class);
+            return sDeletePackage;
+        } catch (NoSuchMethodException ignored) {
+        }
         return null;
     }
 
