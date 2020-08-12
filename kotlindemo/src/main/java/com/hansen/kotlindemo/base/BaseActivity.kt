@@ -2,9 +2,11 @@ package com.hansen.kotlindemo.base
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import com.hansen.kotlindemo.MultipleStatusView
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -19,6 +21,7 @@ import pub.devrel.easypermissions.EasyPermissions
  *@version:  2.1.67
  */
 abstract class BaseActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
+    protected var mLayoutStatusView:MultipleStatusView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,14 @@ abstract class BaseActivity : AppCompatActivity(), EasyPermissions.PermissionCal
      * 多种状态布局监听
      */
     private fun initListener() {
+        mLayoutStatusView?.setOnClickListener(mRetryClickListener)
+    }
 
+    /**
+     * 重试监听
+     */
+    open val mRetryClickListener: View.OnClickListener = View.OnClickListener {
+        start()
     }
 
     abstract fun start()

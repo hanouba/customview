@@ -98,7 +98,7 @@ public class RxjavaActivity extends AppCompatActivity {
 
                                     @Override
                                     public void onError(Throwable e) {
-                                        LogUtils.d(TAG, "onError");
+                                        LogUtils.d(TAG, "onError"+e.getMessage());
                                     }
 
                                     @Override
