@@ -3,24 +3,59 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion "29.0.3"
-
+    signingConfigs {
+        config {
+            keyAlias 'hnktmp'
+            keyPassword '123456'
+            storeFile file('../kotlinhndemo.jks')
+            storePassword '123456'
+        }
+    }
     defaultConfig {
         applicationId "com.hansen.kotlindemo"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
 
+        signingConfig signingConfigs.config
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
             minifyEnabled false
+            debuggable false
+
+            signingConfig signingConfigs.config
+            zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled false
+            debuggable true
+            signingConfig signingConfigs.config
+        }
+    }
+
+    // 自定义输出配置
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "kotlinmvp_v${variant.versionName}_${variant.name}_${}.apk"
+        }
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+    }
+    dexOptions {
+        jumboMode true
+    }
+
+    lintOptions {
+        abortOnError false
     }
 }
 
@@ -34,6 +69,13 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
+    //权限获取
     implementation 'pub.devrel:easypermissions:3.0.0'
+
+    // 网络请求库
+    implementation rootProject.ext.networkLibs
+    // RxJava2
+    implementation rootProject.ext.rxJavaLibs
+
 
 }
