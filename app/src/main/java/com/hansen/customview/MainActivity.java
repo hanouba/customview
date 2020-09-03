@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hansen.customview.activity.UIActivity;
 import com.hansen.customview.flowlayout.LanuchActivity;
 import com.hansen.customview.greendao.DaoMaster;
 import com.hansen.customview.greendao.DaoSession;
@@ -83,5 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void flowlayout(View view) {
         startActivity(new Intent(this, LanuchActivity.class));
+    }
+
+    public void listview(View view) {
+        startActivity(new Intent(this, UIActivity.class));
     }
 }

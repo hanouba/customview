@@ -11,11 +11,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:usesCleartextTraffic="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".mpandroidchart.SmallChartActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".activity.UIActivity"></activity>
+        <activity android:name=".mpandroidchart.SmallChartActivity" />
         <activity
             android:name="com.hansen.rxjava.ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
@@ -38,10 +39,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".hellochart.ColumnChartActivity" />
-
-<!--        流式布局-->
-        <activity android:name=".flowlayout.LanuchActivity"/>
+        <activity android:name=".hellochart.ColumnChartActivity" /> <!-- 流式布局 -->
+        <activity android:name=".flowlayout.LanuchActivity" />
         <activity android:name=".flowlayout.TextFlowActivity" />
         <activity android:name=".flowlayout.PhotoFlowActivity" />
         <activity android:name=".flowlayout.DiffHeightTextFlowActivity" />
