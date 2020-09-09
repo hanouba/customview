@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.hansen.kotlindemo.MultipleStatusView
+import com.hansen.kotlindemo.MyApplication
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -40,6 +42,16 @@ abstract class BaseFragment:Fragment(),EasyPermissions.PermissionCallbacks {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        isViewPrepar = true
+        initView()
+        lazyLoadDataIfPrepared()
+        mLayoutStatusView?.setOnClickListener(mRetryClickListener)
+    }
+
+    abstract fun initView()
+
     private fun lazyLoadDataIfPrepared() {
         if (userVisibleHint && isViewPrepar && !hasLoadData) {
             lazyLoad()
@@ -64,7 +76,7 @@ abstract class BaseFragment:Fragment(),EasyPermissions.PermissionCallbacks {
     override fun onDestroy() {
         super.onDestroy()
 //
-        activity?.let {  }
+        activity?.let { MyApplication.getRefWatcher(it)?.watch(activity) }
     }
     /**
      * 重写要申请权限的Activity或者Fragment的onRequestPermissionsResult()方法，

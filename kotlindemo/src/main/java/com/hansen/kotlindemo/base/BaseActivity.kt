@@ -7,6 +7,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.hansen.kotlindemo.MultipleStatusView
+import com.hansen.kotlindemo.MyApplication
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -102,7 +103,7 @@ abstract class BaseActivity : AppCompatActivity(), EasyPermissions.PermissionCal
      */
     override fun onDestroy() {
         super.onDestroy()
-
+        MyApplication.getRefWatcher(this)?.watch(this)
     }
 
     /**
