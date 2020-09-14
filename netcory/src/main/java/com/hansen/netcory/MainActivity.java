@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String URL = "";
+    private static final String URL = "http://192.168.3.107/";
     private static final String TAG = Package.getPackages().getClass().getSimpleName();
     private HttpRequest httpRequest;
 

@@ -1,3 +1,5 @@
+include ':crypto'
+include ':serverlibrary'
 include ':netcory'
 include ':javautilsconcurrent'
 include ':kotlindemo'
