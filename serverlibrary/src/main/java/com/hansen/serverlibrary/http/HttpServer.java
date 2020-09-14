@@ -19,10 +19,11 @@ import java.util.concurrent.Executors;
  * @version: 2.1.67
  */
 public class HttpServer  {
+    //是否在运行
     private boolean mRunning = false;
-
+    //请求回调
     private HttpCallBack mCallBack;
-
+    //构造方法
     public HttpServer(HttpCallBack httpCallBack) {
         this.mCallBack = httpCallBack;
     }

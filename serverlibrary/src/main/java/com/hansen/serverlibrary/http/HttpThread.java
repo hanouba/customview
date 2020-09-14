@@ -1,5 +1,6 @@
 package com.hansen.serverlibrary.http;
 
+import android.content.pm.PackageInfo;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -19,7 +20,7 @@ import java.net.Socket;
  * @version: 2.1.67
  */
 public class HttpThread implements Runnable{
-    private static final String TAG = Package.getPackages().getClass().getSimpleName();
+    private static final String TAG = PackageInfo.class.getSimpleName();
     private Socket mSocket;
     //回调监听器  不做业务处理
     private HttpCallBack mHttpCallBack;

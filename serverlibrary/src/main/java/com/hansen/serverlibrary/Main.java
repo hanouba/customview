@@ -3,6 +3,7 @@ package com.hansen.serverlibrary;
 import android.os.Build;
 import android.util.Log;
 
+import com.hansen.crypto.AES;
 import com.hansen.crypto.RSA;
 import com.hansen.serverlibrary.http.HttpCallBack;
 import com.hansen.serverlibrary.http.HttpServer;
@@ -42,12 +43,20 @@ public class Main {
     public static void main(String[] args){
         System.out.println("main: start http server ");
 
-        int content = 123456;
-        //将明文用公钥加密得到密文
-        String encrypt = RSA.encrypt(content, PUB_KEY);
-        System.out.println("密文--"+encrypt);
-        String decypt = RSA.decypt(encrypt, PRI_KEY);
-        System.out.println("明文--"+decypt);
+//        int content = 123456;
+//        //将明文用公钥加密得到密文
+//        String encrypt = RSA.encrypt(content, PUB_KEY);
+//        System.out.println("密文--"+encrypt);
+//        String decypt = RSA.decypt(encrypt, PRI_KEY);
+//        System.out.println("明文--"+decypt);
+        //AES 测试
+        AES aes = new AES();
+        String content = "this is aes";
+        byte[] encrypt = aes.encrypt(content);
+        System.out.println("密文--"+new String(encrypt));
+        byte[] decrypt = aes.decrypt(encrypt);
+        System.out.println("明文--"+new String(decrypt));
+
         HttpServer httpServer = new HttpServer(new HttpCallBack() {
             @Override
             public byte[] onResponse(String request) {
