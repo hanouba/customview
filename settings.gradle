@@ -1,3 +1,4 @@
+include ':netcory'
 include ':javautilsconcurrent'
 include ':kotlindemo'
 include ':app', ':stextlib', ':utils', ':recyclerlib', ':hellochart_lib', ':headbubblelib', ':search', ':hackplancharts'
