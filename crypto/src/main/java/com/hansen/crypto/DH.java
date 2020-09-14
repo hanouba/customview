@@ -49,7 +49,7 @@ public class DH {
 
     /**
      * 将双方相同的密钥 int  做一个hash转换
-     * 转换成byte[256]类型 作为AES密钥
+     * 转换成byte[256 ]类型 作为AES密钥
      * @param secretKey
      * @return
      */

@@ -19,23 +19,40 @@ public  class HttpRequest {
 
     private Call mCall;
     private Callback mCallBack;
+    private Request.Builder mBuilder;
+
+    //请求头里面的标记
+    private static final String HANDSHAKE = "handshake";
+
     public HttpRequest(String url) {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
+        mBuilder = new Request.Builder()
                 .get()
-                .url(url)
-                .build();
+                .url(url);
+    }
 
-        mCall = client.newCall(request);
-
+    /**
+     * 与对方交换公钥
+     * @param callback
+     * @param pubKey
+     */
+    public void handshake(Callback callback,String pubKey) {
+        //当前是一个握手请求
+        mBuilder.addHeader(HANDSHAKE,pubKey);
+        request(callback);
+        //防止其他请求也带handshake
+        mBuilder.removeHeader(HANDSHAKE);
     }
 
     public void request(Callback callback) {
-        if (mCall != null) {
-            if (mCall.isExecuted()) {
-                mCall.clone().enqueue(callback);
+        OkHttpClient client = new OkHttpClient();
+        Call call = client.newCall(mBuilder.build());
+
+
+        if (call != null) {
+            if (call.isExecuted()) {
+                call.clone().enqueue(callback);
             }else {
-                mCall.enqueue(callback);
+                call.enqueue(callback);
             }
         }
     }
