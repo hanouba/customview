@@ -4,6 +4,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.hansen.crypto.AES;
+import com.hansen.crypto.DH;
 import com.hansen.crypto.RSA;
 import com.hansen.serverlibrary.http.HttpCallBack;
 import com.hansen.serverlibrary.http.HttpServer;
@@ -50,12 +51,27 @@ public class Main {
 //        String decypt = RSA.decypt(encrypt, PRI_KEY);
 //        System.out.println("明文--"+decypt);
         //AES 测试
-        AES aes = new AES();
-        String content = "this is aes";
-        byte[] encrypt = aes.encrypt(content);
-        System.out.println("密文--"+new String(encrypt));
-        byte[] decrypt = aes.decrypt(encrypt);
-        System.out.println("明文--"+new String(decrypt));
+//        AES aes = new AES();
+//        String content = "this is aes";
+//        byte[] encrypt = aes.encrypt(content);
+//        System.out.println("密文--"+new String(encrypt));
+//        byte[] decrypt = aes.decrypt(encrypt);
+//        System.out.println("明文--"+new String(decrypt));
+
+        //DH 测试
+        DH dhC = new DH();
+        DH dhS = new DH();
+        //客户端公钥
+        int cPublicKey = dhC.getPublicKey();
+        //服务端公钥
+        int sPublicKey = dhS.getPublicKey();
+
+        //客户端通过服务端的公钥 和自己的私钥 生成 密钥
+        byte[] cSecretKey = dhC.getSecretKey(sPublicKey);
+        System.out.println("客户端密钥--"+new String(cSecretKey));
+        //服务端密钥
+        byte[] sSecretKey = dhS.getSecretKey(cPublicKey);
+        System.out.println("服务端端密钥--"+new String(sSecretKey));
 
         HttpServer httpServer = new HttpServer(new HttpCallBack() {
             @Override

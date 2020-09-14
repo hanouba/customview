@@ -3,6 +3,8 @@ package com.hansen.crypto;
 import android.os.Build;
 import android.util.Base64;
 
+import java.nio.ByteBuffer;
+
 import androidx.annotation.RequiresApi;
 
 /**
@@ -41,5 +43,17 @@ public class DataUtils {
         }catch (Exception e) {
             return java.util.Base64.getMimeDecoder().decode(data);
         }
+    }
+
+    /**
+     * 将int转成byte
+     * 一个int 4个byte
+     * @param data
+     * @return
+     */
+    public static byte[] int2byte(int data) {
+        ByteBuffer byteBuffer = ByteBuffer.allocate(4);
+        byteBuffer.putInt(data);
+        return byteBuffer.array();
     }
 }
