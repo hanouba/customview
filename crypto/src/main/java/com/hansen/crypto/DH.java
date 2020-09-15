@@ -32,7 +32,6 @@ public class DH {
      * @return
      */
     public int getPublicKey() {
-
         return (int) (Math.pow(dhG,mPriKey) % dhP);
     }
 

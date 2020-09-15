@@ -22,10 +22,7 @@ import androidx.annotation.RequiresApi;
  * @version: 2.1.67
  */
 public class Main {
-    private static final String PUB_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQChkESFLhsDzQKJPaIQ3WE+9PZt\n" +
-            "3o1Bzpkk7uNRLC2rOyeuEAdO+JDDNkxM0MdX/Jfn1Xf9INeDhXikrCmSaaF9/fMf\n" +
-            "ihBhfDQ2HKj8T8kVfyV5aNOdXvxwuhKTcyWlfEHl++sDKmCO4H6UhDvawIqxf3GH\n" +
-            "wLogOiTIge+CMf1+iwIDAQAB";
+
     private static final String PRI_KEY = "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAKGQRIUuGwPNAok9\n" +
             "ohDdYT709m3ejUHOmSTu41EsLas7J64QB074kMM2TEzQx1f8l+fVd/0g14OFeKSs\n" +
             "KZJpoX398x+KEGF8NDYcqPxPyRV/JXlo051e/HC6EpNzJaV8QeX76wMqYI7gfpSE\n" +
