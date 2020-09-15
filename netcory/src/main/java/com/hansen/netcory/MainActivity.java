@@ -11,7 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.hansen.crypto.AES;
 import com.hansen.crypto.DH;
+import com.hansen.crypto.DataUtils;
 import com.hansen.crypto.RSA;
 import com.hansen.netcory.http.HttpRequest;
 
@@ -26,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
             "wLogOiTIge+CMf1+iwIDAQAB";
     private static final String URL = "http://192.168.3.107/";
     private byte[] mAesKey;
-    private static final String TAG = Package.getPackages().getClass().getSimpleName();
+    private static final String TAG = "MainActivity_TAG";
     private HttpRequest httpRequest;
+    private DH dhC;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,13 +43,13 @@ public class MainActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void requestUrl(View view) {
 
-        DH dh = new DH();
+        dhC = new DH();
         //获取自己的公钥
-        int publicKey = dh.getPublicKey();
+        final int publicKey = dhC.getPublicKey();
         //如何aes密匙不可用 , 则直接握手
         if (mAesKey == null || mAesKey.length <= 0) {
 
-            Log.i(TAG, "requestUrl: 获取自己的公钥" + dh.getPublicKey() );
+            Log.i(TAG, "requestUrl: 获取自己的公钥" + dhC.getPublicKey() );
 
             httpRequest.handshake(new Callback() {
                 @Override
@@ -55,21 +59,35 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-
+                    //服务端已经将公钥返回
+                    byte[] serverPubKey = response.body().bytes();
+                    Log.i(TAG, "serverPubKey: "+ DataUtils.byte2int(serverPubKey));
+                    //客户端通过服务端的公钥得到私钥 作为aes的密钥  这个和服务端是一致的
+                    mAesKey = dhC.getSecretKey(serverPubKey);
+                    Log.i(TAG, "mAesKey: "+new String(mAesKey));
                 }
+                //用公钥(base64)加密公钥(int)得到密文(base64)
             }, RSA.encrypt(publicKey,PUB_KEY));
-        }
-        httpRequest.request(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Log.i(TAG, "onFailure: "+e.getMessage());
-            }
+        }else {
+            httpRequest.request(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.i(TAG, "onFailure: "+e.getMessage());
+                }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Log.i(TAG, "onResponse: "+response.body().toString());
-            }
-        });
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    byte[] responseContent = response.body().bytes();
+                    Log.i(TAG, "onResponse: "+ responseContent);
+                    //正常请求中通过aes进行解码
+                    AES aes = new AES(mAesKey);
+                    String content = new String(aes.decrypt(responseContent));
+
+                    Log.i(TAG, "onResponse: "+content);
+                }
+            });
+        }
+
 
     }
 }

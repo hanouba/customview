@@ -12,6 +12,7 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import androidx.annotation.RequiresApi;
 
@@ -28,6 +29,7 @@ import androidx.annotation.RequiresApi;
  */
 public class AES {
     private SecretKey mKey;
+
     public AES() {
         try {
             KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
@@ -35,7 +37,7 @@ public class AES {
             SecureRandom secureRandom = new SecureRandom();
             secureRandom.setSeed(System.currentTimeMillis());
             //初始化密匙对象
-            keyGenerator.init(128,secureRandom);
+            keyGenerator.init(128, secureRandom);
             //生成aes密匙并保持
             mKey = keyGenerator.generateKey();
         } catch (NoSuchAlgorithmException e) {
@@ -43,8 +45,21 @@ public class AES {
         }
     }
 
+    public AES(byte[] key) {
+        mKey = new SecretKeySpec(key, "AES");
+    }
+
+    public byte[] getmKey() {
+        return mKey.getEncoded();
+    }
+
+    public void setmKey(byte[] key) {
+        this.mKey = new SecretKeySpec(key, "AES");
+    }
+
     /**
      * 编码
+     *
      * @param content
      * @return
      */
@@ -54,7 +69,7 @@ public class AES {
         }
         try {
             Cipher ci = Cipher.getInstance("AES");
-            ci.init(Cipher.ENCRYPT_MODE,mKey);
+            ci.init(Cipher.ENCRYPT_MODE, mKey);
             return ci.doFinal(content.getBytes());
 
         } catch (NoSuchAlgorithmException e) {
@@ -75,6 +90,7 @@ public class AES {
 
     /**
      * 解码
+     *
      * @param content
      * @return
      */
@@ -82,11 +98,10 @@ public class AES {
         if (mKey == null) {
             return new byte[]{-1};
         }
-
         try {
             Cipher cipher = Cipher.getInstance("AES");
-            cipher.init(Cipher.DECRYPT_MODE,mKey);
-          return   cipher.doFinal(content);
+            cipher.init(Cipher.DECRYPT_MODE, mKey);
+            return cipher.doFinal(content);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchPaddingException e) {

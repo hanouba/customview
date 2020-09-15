@@ -2,12 +2,20 @@ package com.hansen.serverlibrary;
 
 import android.os.Build;
 import android.util.Log;
+import android.widget.LinearLayout;
 
 import com.hansen.crypto.AES;
 import com.hansen.crypto.DH;
+import com.hansen.crypto.DataUtils;
 import com.hansen.crypto.RSA;
 import com.hansen.serverlibrary.http.HttpCallBack;
 import com.hansen.serverlibrary.http.HttpServer;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.RequiresApi;
 
@@ -37,46 +45,61 @@ public class Main {
             "5iyGnFenMyCoM4cKjF3CYKN4v/IKFb1eFnW9rmBA0MJTu12uFzWIHQJAPFvTR+RD\n" +
             "gWC3eueMwlztBJwYZ6eAOi0SAih7kvHqhQ9+LJYIa74cHhGejloWHp4fgUJmjoUo\n" +
             "6pOLdJ9rtkEaQw==";
+    private static final String HAND_SHAKE = "handshake";
+    private static DH dhS;
+    private static AES mAes;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static void main(String[] args){
         System.out.println("main: start http server ");
+        dhS = new DH();
+        mAes = new AES();
 
-//        int content = 123456;
-//        //将明文用公钥加密得到密文
-//        String encrypt = RSA.encrypt(content, PUB_KEY);
-//        System.out.println("密文--"+encrypt);
-//        String decypt = RSA.decypt(encrypt, PRI_KEY);
-//        System.out.println("明文--"+decypt);
-        //AES 测试
-//        AES aes = new AES();
-//        String content = "this is aes";
-//        byte[] encrypt = aes.encrypt(content);
-//        System.out.println("密文--"+new String(encrypt));
-//        byte[] decrypt = aes.decrypt(encrypt);
-//        System.out.println("明文--"+new String(decrypt));
 
-        //DH 测试
-        DH dhC = new DH();
-        DH dhS = new DH();
-        //客户端公钥
-        int cPublicKey = dhC.getPublicKey();
-        //服务端公钥
-        int sPublicKey = dhS.getPublicKey();
 
-        //客户端通过服务端的公钥 和自己的私钥 生成 密钥
-        byte[] cSecretKey = dhC.getSecretKey(sPublicKey);
-        System.out.println("客户端密钥--"+new String(cSecretKey));
-        //服务端密钥
-        byte[] sSecretKey = dhS.getSecretKey(cPublicKey);
-        System.out.println("服务端端密钥--"+new String(sSecretKey));
 
-        HttpServer httpServer = new HttpServer(new HttpCallBack() {
+        final HttpServer httpServer = new HttpServer(new HttpCallBack() {
             @Override
             public byte[] onResponse(String request) {
-                return "imock".getBytes();
+                //拿到请求结果 选判断是否是握手请求
+                if (isHandShake(request)) {
+                    //握手请求
+                    Map<String, String> header = HttpServer.getHeader(request);
+                    String handShake = header.get(HAND_SHAKE);
+                    System.out.println("handShake--" + handShake);
+                    String decypt = RSA.decypt(handShake, PRI_KEY);
+                    System.out.println("handShake--decypt--" + decypt);
+                    //转成int类型
+                    //拿到了客户端的  公钥
+                    int clientDhPubKey = Integer.parseInt(decypt);
+
+                    //服务端通过客户端的公钥得到服务端的私钥  作为aes的密钥
+                    mAes.setmKey(dhS.getSecretKey(clientDhPubKey));
+                    //转成byte 将服务端公钥返回去
+                    System.out.println("getPublicKey--" + dhS.getPublicKey());
+                    return DataUtils.int2byte(dhS.getPublicKey());
+                }else {
+                    // 正常请求 通过aes加密
+                    byte[] result = mAes.encrypt("imock");
+                    System.out.println("httpServer--" + new String(result));
+                    System.out.println("httpServer解码--" + new String(mAes.decrypt(result)));
+                    return result;
+                }
+
             }
         });
         httpServer.startHttpServer();
 
     }
+
+    /**
+     * 根据请求header中是否包含handshake字段来判断
+     * @param request
+     * @return
+     */
+    private static boolean isHandShake(String request) {
+         return  (request != null && request.contains(HAND_SHAKE));
+    }
+
+
 }

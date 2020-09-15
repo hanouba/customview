@@ -26,7 +26,7 @@ import androidx.annotation.RequiresApi;
  * @author HanN on 2020/9/14 14:48
  * @email: 1356548475@qq.com
  * @project customview
- * @description: ras 加密实现
+ * @description: ras 非对称加密实现
  * @updateuser:
  * @updatedata: 2020/9/14 14:48
  * @updateremark:
@@ -36,9 +36,9 @@ public class RSA {
     private static final String RSA_ALGORITHM = "RSA/ECB/PKCS1Padding";
     /**
      * 加密函数,传入明文,公钥,返回密文 base64
-     * @param data
-     * @param pubKey
-     * @return
+     * @param data  明文
+     * @param pubKey  OpenSSL 获取到的公钥
+     * @return   base64编码的密文
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String encrypt(int data, String pubKey) {
@@ -82,7 +82,7 @@ public class RSA {
     /**
      * 传入密文 密匙 返回明文
      * @param encrypt base64 编码的密文
-     * @param key  base64编码的密匙
+     * @param key  base64编码的密匙  OpenSSL 生成的密匙
      * @return
      */
     @RequiresApi(api = Build.VERSION_CODES.O)

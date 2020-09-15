@@ -1,8 +1,12 @@
 package com.hansen.serverlibrary.http;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -51,5 +55,25 @@ public class HttpServer  {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Map<String, String> getHeader(String request) {
+        Map<String ,String > header = new HashMap<>();
+        try {
+            BufferedReader reader = new BufferedReader(new StringReader(request));
+            String line = reader.readLine();
+            while (line != null && !line.trim().isEmpty()) {
+                int p = line.indexOf(":");
+                if (p >= 0) {
+                    header.put(line.substring(0,p).trim().toLowerCase(),
+                            line.substring(p + 1 ).trim());
+                }
+                line = reader.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return header;
     }
 }

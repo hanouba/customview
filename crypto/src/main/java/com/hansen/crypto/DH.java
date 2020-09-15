@@ -16,8 +16,10 @@ import java.util.Random;
  * @version: 2.1.67
  */
 public class DH {
+    //定义两个随机数 , 服务端和客户端保持一致
     private static final int dhP = 23;
     private static final int dhG = 5;
+    // 私钥
     private int mPriKey;
     //在构造器中生成私钥
     public DH () {
@@ -43,6 +45,17 @@ public class DH {
      */
     public byte[] getSecretKey(int publicKey) {
         int buf = (int) (Math.pow(publicKey,mPriKey) % dhP);
+        return sha256(buf);
+    }
+    /**
+     * 接收对方的公钥 与自己的私钥通过秘钥公式生成秘钥
+     * 因为需要作为AES的密钥,所有要转换成byte[]
+     * @param publicKey
+     * @return
+     */
+    public byte[] getSecretKey(byte[] publicKey) {
+        int pubKey = DataUtils.byte2int(publicKey);
+        int buf = (int) (Math.pow(pubKey,mPriKey) % dhP);
         return sha256(buf);
     }
 

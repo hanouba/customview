@@ -56,4 +56,9 @@ public class DataUtils {
         byteBuffer.putInt(data);
         return byteBuffer.array();
     }
+
+    public static int byte2int(byte[] data) {
+        ByteBuffer byteBuffer = ByteBuffer.wrap(data);
+        return byteBuffer.getInt();
+    }
 }
