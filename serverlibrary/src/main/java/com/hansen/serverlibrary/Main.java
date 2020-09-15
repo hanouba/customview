@@ -1,9 +1,6 @@
 package com.hansen.serverlibrary;
 
 import android.os.Build;
-import android.util.Log;
-import android.widget.LinearLayout;
-
 import com.hansen.crypto.AES;
 import com.hansen.crypto.DH;
 import com.hansen.crypto.DataUtils;
@@ -11,10 +8,6 @@ import com.hansen.crypto.RSA;
 import com.hansen.serverlibrary.http.HttpCallBack;
 import com.hansen.serverlibrary.http.HttpServer;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.HashMap;
 import java.util.Map;
 
 import androidx.annotation.RequiresApi;
