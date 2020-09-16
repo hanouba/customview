@@ -217,15 +217,15 @@
 
 
 # ButterKnife
-#-keep class butterknife.** { *; }
-#-dontwarn butterknife.internal.**
-#-keep class **$$ViewBinder { *; }
-#-keepclasseswithmembernames class * {
-#    @butterknife.* <fields>;
-#}
-#-keepclasseswithmembernames class * {
-#    @butterknife.* <methods>;
-#}
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
 
 
 # EventBus
@@ -297,8 +297,19 @@
 ## 使用Gson时需要配置Gson的解析对象及变量都不混淆。不然Gson会找不到变量。
 ## 将下面替换成自己的实体类
 -keep class com.hansen.proguard.bean.** { *; }
+# dagger
+-dontwarn dagger.internal.codegen.**
+-keepclassmembers,allowobfuscation class * {
+    @javax.inject.* *;
+    @dagger.* *;
+    <init>();
+}
 
-
+-keep class dagger.* { *; }
+-keep class javax.inject.* { *; }
+-keep class * extends dagger.internal.Binding
+-keep class * extends dagger.internal.ModuleAdapter
+-keep class * extends dagger.internal.StaticInjection
 # Jackson
 #-dontwarn org.codehaus.jackson.**
 #-dontwarn com.fasterxml.jackson.databind.**
