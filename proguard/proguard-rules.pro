@@ -292,11 +292,11 @@
 
 
 # Gson
-#-keep class sun.misc.Unsafe { *; }
-#-keep class com.google.gson.stream.** { *; }
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.stream.** { *; }
 ## 使用Gson时需要配置Gson的解析对象及变量都不混淆。不然Gson会找不到变量。
 ## 将下面替换成自己的实体类
-#-keep class com.example.bean.** { *; }
+-keep class com.hansen.proguard.bean.** { *; }
 
 
 # Jackson
@@ -354,10 +354,10 @@
 
 
 # Retrofit
-#-dontwarn retrofit2.**
-#-keep class retrofit2.** { *; }
-#-keepattributes Signature
-#-keepattributes Exceptions
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
 
 
 # Retrolambda
