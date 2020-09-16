@@ -212,8 +212,8 @@
 
 
 # Bugly
-#-dontwarn com.tencent.bugly.**
-#-keep class com.tencent.bugly.** {*;}
+-dontwarn com.tencent.bugly.**
+-keep class com.tencent.bugly.** {*;}
 
 
 # ButterKnife
