@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Toast;
 
-import com.hailong.biometricprompt.fingerprint.FingerprintCallback;
-import com.hailong.biometricprompt.fingerprint.FingerprintVerifyManager;
+import com.hansen.fingerprintlib.FingerprintCallback;
+import com.hansen.fingerprintlib.FingerprintVerifyManager;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;

@@ -1,14 +1,8 @@
-package com.hansen.fingerprint.bean;
+package com.hansen.fingerprintlib;
 
 /**
- * @author HanN on 2020/9/18 11:15
- * @email: 1356548475@qq.com
- * @project customview
- * @description:
- * @updateuser:
- * @updatedata: 2020/9/18 11:15
- * @updateremark:
- * @version: 2.1.67
+ * 验证窗口的样式
+ * Created by ZuoHailong on 2019/7/9.
  */
 public class VerificationDialogStyleBean {
 
@@ -93,5 +87,4 @@ public class VerificationDialogStyleBean {
     public void setCancelBtnText(String cancelBtnText) {
         this.cancelBtnText = cancelBtnText;
     }
-
 }

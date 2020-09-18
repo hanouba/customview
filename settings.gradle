@@ -1,3 +1,4 @@
+include ':fingerprintlib'
 include ':fingerprint'
 include ':okhttpRenewalUp'
 include ':proguard'
