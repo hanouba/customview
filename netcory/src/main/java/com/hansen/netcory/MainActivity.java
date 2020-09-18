@@ -4,10 +4,16 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 
@@ -16,7 +22,11 @@ import com.hansen.crypto.DH;
 import com.hansen.crypto.DataUtils;
 import com.hansen.crypto.RSA;
 import com.hansen.netcory.http.HttpRequest;
+import com.hansen.netcory.http.OkHttpDownUtils;
+import com.hansen.netcory.http.listener.HttpDownListener;
 
+
+import java.io.File;
 import java.io.IOException;
 
 import javax.crypto.spec.DHGenParameterSpec;
@@ -27,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
             "ihBhfDQ2HKj8T8kVfyV5aNOdXvxwuhKTcyWlfEHl++sDKmCO4H6UhDvawIqxf3GH\n" +
             "wLogOiTIge+CMf1+iwIDAQAB";
     private static final String URL = "http://192.168.3.107/";
+    private static final String DOWNURL = "http://192.168.3.107/";
+    private static final File PATH_NAME = Environment.getDownloadCacheDirectory();
     private byte[] mAesKey;
     private static final String TAG = "MainActivity_TAG";
     private HttpRequest httpRequest;
@@ -89,5 +101,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public void downFile(View view) {
+        OkHttpDownUtils okHttpDownUtils = new OkHttpDownUtils();
+        okHttpDownUtils.getDownRequest(DOWNURL, PATH_NAME, new HttpDownListener() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response, long totalLength, long alreadDownLength) {
+
+            }
+        });
     }
 }
