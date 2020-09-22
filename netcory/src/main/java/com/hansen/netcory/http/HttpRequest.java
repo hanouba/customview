@@ -15,7 +15,7 @@ import okhttp3.Request;
  * @updateremark:
  * @version: 2.1.67
  */
-public  class HttpRequest {
+public class HttpRequest {
 
     private Call mCall;
     private Callback mCallBack;
