@@ -29,7 +29,7 @@ abstract class BaseFragment:Fragment(),EasyPermissions.PermissionCallbacks {
      */
     private var isViewPrepar = false
     private var hasLoadData = false
-    private var mLayoutStatusView:MultipleStatusView? = null
+    protected var mLayoutStatusView:MultipleStatusView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutId(),null)

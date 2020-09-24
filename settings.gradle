@@ -1,3 +1,4 @@
+include ':mzbanner'
 include ':fingerprintlib'
 include ':fingerprint'
 include ':okhttpRenewalUp'

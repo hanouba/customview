@@ -43,6 +43,17 @@ public class OkHttpDownUtils {
     private File mPath;//文件保存路径
     private JSONObject mJson;
     private HttpDownListener mHttpDownListener;//下载进度接口回调
+    private static OkHttpDownUtils okHttpDownUtils;
+    public static OkHttpDownUtils getInstance() {
+        if (okHttpDownUtils == null) {
+            synchronized (OkHttpDownUtils.class) {
+                if (okHttpDownUtils == null) {
+                    okHttpDownUtils = new OkHttpDownUtils();
+                }
+            }
+        }
+        return okHttpDownUtils;
+    }
 
     /**
      * 没有断点续传的下载

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hansen.customview.activity.OkHttpActivity;
 import com.hansen.customview.activity.UIActivity;
 import com.hansen.customview.flowlayout.LanuchActivity;
 import com.hansen.customview.greendao.DaoMaster;
@@ -88,5 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void listview(View view) {
         startActivity(new Intent(this, UIActivity.class));
+    }
+
+    public void renewalDown(View view) {
+        startActivity(new Intent(this, OkHttpActivity.class));
     }
 }

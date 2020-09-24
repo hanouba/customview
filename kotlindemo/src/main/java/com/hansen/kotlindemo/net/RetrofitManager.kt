@@ -2,6 +2,7 @@ package com.hansen.kotlindemo.net
 
 import com.hansen.kotlindemo.MyApplication
 import com.hansen.kotlindemo.api.ApiService
+import com.hansen.kotlindemo.api.UrlConstant
 import com.hansen.kotlindemo.utils.AppUtils
 import com.hansen.kotlindemo.utils.NetworkUtil
 import com.hansen.kotlindemo.utils.Preference
@@ -35,7 +36,7 @@ object RetrofitManager {
 
     private fun getRertrofit(): Retrofit {
         return Retrofit.Builder()
-                .baseUrl("")
+                .baseUrl(UrlConstant.BASE_URL)
                 .client(getOkHttpClient())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())

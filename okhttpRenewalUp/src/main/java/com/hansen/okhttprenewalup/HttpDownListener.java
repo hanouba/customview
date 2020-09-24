@@ -15,7 +15,7 @@ import okhttp3.Response;
  * @updateremark:
  * @version: 2.1.67
  */
-interface HttpDownListener {
+public interface HttpDownListener {
     void onFailure(Call call, IOException e);
     void onResponse(Call call, Response response,long totalLength,long alreadDownLength);
 

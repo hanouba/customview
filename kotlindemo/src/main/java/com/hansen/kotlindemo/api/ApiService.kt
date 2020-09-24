@@ -17,7 +17,7 @@ import retrofit2.http.Url
  *@version:  2.1.67
  */
 interface ApiService{
-    @GET
+    @GET("v2/feed?")
     fun getFirstHomeData(@Query("num")num: Int): Observable<HomeBean>
     @GET
     fun getMoreHomeData(@Url url: String): Observable<HomeBean>

@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.UIActivity"></activity>
+        <activity android:name=".activity.OkHttpActivity"></activity>
+        <activity android:name=".activity.UIActivity" />
         <activity android:name=".mpandroidchart.SmallChartActivity" />
         <activity
             android:name="com.hansen.rxjava.ui.login.LoginActivity"
