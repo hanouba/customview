@@ -1,3 +1,4 @@
+include ':aretrofitdemo'
 include ':mzbanner'
 include ':fingerprintlib'
 include ':fingerprint'
