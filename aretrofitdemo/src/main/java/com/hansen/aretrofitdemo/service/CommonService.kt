@@ -19,9 +19,16 @@ import retrofit2.http.Part
  */
 interface CommonService {
     /**
-     * 文件上传
+     * 单文件上传
      */
     @POST("api/common/upload")
     @Multipart
     fun uploadFile(@Part part: MultipartBody.Part) : Call<BaseResponse>
+
+    /**
+     * 多文件上传
+     */
+    @POST("api/common/uploads")
+    @Multipart
+    fun uploadFiles(@Part parts: List<MultipartBody.Part>) : Call<BaseResponse>
 }

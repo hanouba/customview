@@ -85,7 +85,59 @@ class SecondActivity : AppCompatActivity() {
 
 }
 //    2.多文件上传
-    fun uploadFiles(view: View) {}
+    fun uploadFiles(view: View) {
+    Log.v("MYTGAG", "uploadFiles start...")
+    //1创建一个Retrofit
+    var retrofit = Retrofit.Builder()
+            .client(
+                    OkHttpClient.Builder()
+                            .addInterceptor(
+                                    HttpLoggingInterceptor()
+                                            .setLevel(HttpLoggingInterceptor.Level.BASIC)
+                            )
+                            .build()
+            )
+            .baseUrl("http://192.168.3.107:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    //2.创建一个服务
+    var commonService = retrofit.create(CommonService::class.java)
+
+    //3.创建一个文件上传的命令
+    var requestBody = RequestBody.create(
+            MediaType.parse("multipart/form-data"),
+            File(getExternalFilesDir(""), "github.jpg")
+    )
+    // 传输文件类型名称   文件名称 请求体
+    var part = MultipartBody.Part.createFormData("files", "github.jpg", requestBody)
+
+
+    var requestBody1 = RequestBody.create(
+            MediaType.parse("multipart/form-data"),
+            File(getExternalFilesDir(""), "header.jpg")
+    )
+
+    var part1 = MultipartBody.Part.createFormData("files", "header.jpg", requestBody1)
+
+    var parts = ArrayList<MultipartBody.Part>()
+    parts.add(part)
+    parts.add(part1)
+    var uploadFileCall = commonService.uploadFiles(parts)
+
+    //4.执行文件上传命令
+    uploadFileCall.enqueue(object : Callback<BaseResponse> {
+        override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+            Log.v("MYTAG", "onFail start...")
+            Log.v("MYTAG", t.toString())
+        }
+
+        override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+            Log.v("MYTAG", "onResponse start...")
+            Log.v("MYTAG", response.body().toString())
+        }
+    })
+}
 //    3.多文件上传1
     fun uploadFiles1(view: View) {}
 //    4.文件的下载
