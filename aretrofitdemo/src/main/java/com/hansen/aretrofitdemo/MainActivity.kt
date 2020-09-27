@@ -315,7 +315,6 @@ class MainActivity : AppCompatActivity() {
                 Log.v("mmmni", "onResponse start...")
                 Log.v("mmmni", "body:" + response.body().toString())
             }
-
             override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
                 Log.v("mmmni", "onFail start...")
                 Log.v("mmmni", "error:" + t.toString());
