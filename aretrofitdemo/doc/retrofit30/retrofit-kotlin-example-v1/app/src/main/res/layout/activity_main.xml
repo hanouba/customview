@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="login"
+            android:text="01.用户登录：单个查询参数设置【@GET+@Query】" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="addUser"
+            android:text="02.用户注册：请求体JSON对象设置【@POST+@Body】" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="loginQueryMap"
+            android:text="03.用户登录：多个查询参数设置【@GET+@QueryMap】" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="loginForm"
+            android:text="04.用户登录：单个表单参数设置【@POST+@FormURLEncoded+@Field】" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="loginFormMap"
+            android:text="05.用户登录：多个表单参数设置【@POST+@FormURLEncoded+@FieldMap】" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="loginPath"
+            android:text="06.查询用户：动态的URL变参设置【@GET+@Path】" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="loginUrl"
+            android:text="07.查询用户：动态的URL设置【@GET+@Url】" />
+        <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="loginHttp"
+        android:text="08.查询用户：多个参数集成设置【@HTTP】" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="loginHeader"
+            android:text="09.添加请求头：请求头设置【@Headers+@Header】" />
+
+
+   <!--     8.动态的切换多个url
+        9.网络的缓存设置
+        10.添加一个HTTPS的请求
+        11.添加token访问认证
+        12.RxJava的结合使用
+        13.RxJava请求错误的通用处理
+        14.与RxLifecycle的结合使用
+        15.与Deferred的结合使用
+        16.与Kotlin协程的结合使用-->
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.core.widget.NestedScrollView>

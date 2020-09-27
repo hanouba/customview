@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <Button
         android:id="@+id/button_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="登录"
         android:onClick="login"
+        android:text="登录"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -23,8 +24,8 @@
         android:id="@+id/button_regist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="注册"
         android:onClick="addUser"
+        android:text="注册"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -32,4 +33,48 @@
         app:layout_constraintTop_toBottomOf="@+id/button_login"
         app:layout_constraintVertical_bias="0.143" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="Button5"
+        android:text="03 用户登录： 多个参数设置【@GET+@QueryMap】" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="Button6"
+        android:text="04 用户登录：单个表单参数设置【@POST+@FormURLEncoded+@Field】" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="Button7"
+        android:text="05用户登录 ： 多个表单参数设置【@POST+@FormURLEncoded+@FieldMap】" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="Button8"
+        android:text="06 查询用户： 动态的URL变参设置【@GET+@Path】" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="Button9"
+        android:text="07 查询用户：动态的URL设置【@GET+@Url】" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="Button10"
+        android:text="08 查询用户： 多个参数集成设置【@HTTP】" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button_11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="Button11"
+        android:text="09 添加请求头： 请求头设置【@Headers+@Header】" />
+
+</LinearLayout>

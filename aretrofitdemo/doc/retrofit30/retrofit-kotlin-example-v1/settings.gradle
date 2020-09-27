@@ -1,0 +1,4 @@
+include ':lib-test'
+include ':lib-rxjava-adapter'
+include ':app'
+rootProject.name = "retrofit-kotlin-example-v1"
