@@ -42,8 +42,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.14.9'
-
+    implementation('com.github.ihsanbal:LoggingInterceptor:2.0.7') {
+        exclude group: 'org.json', module: 'json'
+    }
 
     implementation 'com.trello.rxlifecycle4:rxlifecycle-kotlin:4.0.0'
     implementation 'com.trello.rxlifecycle4:rxlifecycle-android-lifecycle-kotlin:4.0.0'
+
+    implementation project(path: ':rxjava3lib')
 }

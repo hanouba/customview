@@ -3,6 +3,7 @@ package com.hansen.aretrofitdemo.service
 import com.hansen.aretrofitdemo.bean.AddUserResponse
 import com.hansen.aretrofitdemo.bean.BaseResponse
 import com.hansen.aretrofitdemo.bean.User
+import io.reactivex.rxjava3.core.Observable
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -54,4 +55,8 @@ interface UserService {
     @GET("login/get/header")
     @Headers("a:1","b:2")
     fun loginHeader(@Header("c") c:String,@Query("username") username :String, @Query("password")password:Int) : Call<BaseResponse>
+
+    //和rxjava配合使用  回调的对象变了
+    @GET("login/get")
+    fun loginRxlief(@Query("username") username:String ,@Query("password") password: Int) : Observable<BaseResponse>
 }
