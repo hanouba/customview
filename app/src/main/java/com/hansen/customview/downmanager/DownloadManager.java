@@ -1,16 +1,12 @@
 package com.hansen.customview.downmanager;
 
-import android.content.Context;
 
-import com.hansen.customview.BaseApp;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Currency;
 import java.util.HashMap;
-import java.util.concurrent.atomic.AtomicMarkableReference;
 import java.util.concurrent.atomic.AtomicReference;
 
 import io.reactivex.Observable;
@@ -40,6 +36,7 @@ public class DownloadManager {
     OkHttpClient mClient;
     //存放各个下载请求
     private HashMap<String, Call> downCalls;
+    private File mFile;
 
 
     /**
@@ -67,7 +64,8 @@ public class DownloadManager {
 
     }
 
-    public void download(String url, DownLoadObserver downLoadObserver) {
+    public void download(File file,String url, DownLoadObserver downLoadObserver) {
+        mFile = file;
         Observable.just(url)
                 .filter(s -> !downCalls.containsKey(s)) //call的map 里面有了就表面正在下载,则这次不下载
                 .flatMap(s -> Observable.just(createDownInfo(s)))
@@ -90,8 +88,11 @@ public class DownloadManager {
         //downloadinfo 里面只有下载地址信息
         DownloadInfo downloadInfo = new DownloadInfo(url);
         //获取文件大小 通过url
-        getContentLength(url);
-        return null;
+        long contentLength = getContentLength(url);
+        downloadInfo.setTotal(contentLength);
+        String fileName = url.substring(url.lastIndexOf("/"));
+        downloadInfo.setFileName(fileName);
+        return downloadInfo;
     }
 
     /**
@@ -103,6 +104,7 @@ public class DownloadManager {
     private long getContentLength(String url) {
         Request request = new Request.Builder()
                 .url(url)
+                .addHeader("Accept-Encoding", "identity")
                 .build();
 
         try {
@@ -127,6 +129,7 @@ public class DownloadManager {
     }
 
     /**
+     * 根据文件名和文件长度 判断是否已经下载过 如果下载过 就重新命名（1） 再下载
      * @param downloadInfo
      * @return
      */
@@ -134,10 +137,16 @@ public class DownloadManager {
         String fileName = downloadInfo.getFileName();
         //下载进度是 0  文件长度是之前通过url获取得到的
         long downloadLength = 0, contentLength = downloadInfo.getTotal();
-        File file = new File(BaseApp.getInstance().getFilesDir(), fileName);
+        File file = new File(mFile, fileName);
         if (file.exists()) {
             //找到了文件,代办已经下载过,则取其长度
+
+
             downloadLength = file.length();
+//             第二种处理方式 如果之前下载过 就删除之前的文件 重新下载 设置下载进度0 文件名还是之前的文件名
+//            deleteFile(file.getPath());
+//            downloadInfo.setProgress(0);
+//            return downloadInfo;
         }
         //之前下载过,需要重新来一个文件
         int i = 1;
@@ -149,13 +158,13 @@ public class DownloadManager {
             } else {
                 fileNameOther = fileName.substring(0, dotIndex) + "(" + i + ")" + fileName.substring(dotIndex);
             }
-            File newFile = new File(BaseApp.getInstance().getFilesDir(), fileNameOther);
+            File newFile = new File(mFile, fileNameOther);
             file = newFile;
             downloadLength = newFile.length();
             i++;
         }
 
-        //设置改变过的文件名 大小
+        //设置改变过的文件名 大小 重置为0
         downloadInfo.setProgress(downloadLength);
         downloadInfo.setFileName(file.getName());
         return downloadInfo;
@@ -185,7 +194,7 @@ public class DownloadManager {
             downCalls.put(url, call);
             Response response = call.execute();
             //文件名称
-            File file = new File(BaseApp.getInstance().getFilesDir(), downloadInfo.getFileName());
+            File file = new File(mFile, downloadInfo.getFileName());
             InputStream inputStream = null;
             FileOutputStream fileOutputStream = null;
             try {
@@ -218,7 +227,26 @@ public class DownloadManager {
             emitter.onComplete();
         }
     }
+    public void cancel(String url) {
+        Call call = downCalls.get(url);
+        if (call != null) {
+            call.cancel();//取消
+        }
+        downCalls.remove(url);
+    }
 
+    /**
+     * 删除指定文件
+     * @param filePath
+     * @return
+     */
+    public boolean deleteFile(String filePath) {
+        File file = new File(filePath);
+        if (file.isFile() && file.exists()) {
+            return file.delete();
+        }
+        return false;
+    }
 
 
 

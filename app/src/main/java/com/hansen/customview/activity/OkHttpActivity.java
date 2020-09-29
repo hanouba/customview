@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.hansen.customview.Constant;
 import com.hansen.customview.R;
 import com.hansen.customview.downmanager.DownLoadObserver;
@@ -24,18 +25,24 @@ import java.io.IOException;
 public class OkHttpActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = OkHttpActivity.class.getSimpleName();
     private String downUrl = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
-    private String url1 = "http://192.168.31.169:8080/out/dream.flac";
-    private String url2 = "http://192.168.31.169:8080/out/music.mp3";
-    private String url3 = "http://192.168.31.169:8080/out/code.zip";
+    private String url1 = "http://192.168.3.107:8080/download/okhttp.png";
+    private String url2 = "http://192.168.3.107:8080/download/192192.mp4";
+    private String url3 = "http://192.168.3.145:8088/portal/r/df?groupValue=0dfac39c-81c2-4638-8e72-c6cc1ba02c1e&fileValue=FILE&sid=cf9585cb-3454-4660-bdaa-96de3472694f&repositoryName=%21form-ui-file-&appId=com.actionsoft.apps.ivsom&attachment=true&fileName=ivsom_zx_v20200825_1736_2.1.98_release_sign.apk&lastModified=1598349244000";
 
     private Button button1,button2,button3;
     private Button cancel1,cancel2,cancel3;
     private ProgressBar progressBar1,progressBar2,progressBar3;
+    private File file;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ok_http);
-
+        file = new File(Constant.PATH_SDCARD);
+        LogUtils.i("File文件路径"+ file.getAbsolutePath());
+        if (!file.exists()) {
+            file.mkdirs();
+        }
         initView();
     }
 
@@ -61,10 +68,7 @@ public class OkHttpActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     public void renewalDown(View view) {
-        File file = new File(Constant.PATH_SDCARD);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
+
         OkHttpDownUtils.getInstance().getRenewalDownRequest(downUrl,file, new HttpDownListener() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -82,10 +86,10 @@ public class OkHttpActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.main_btn_down1:
-                DownloadManager.getInstance().download(url1, new DownLoadObserver() {
+                DownloadManager.getInstance().download(file,url1, new DownLoadObserver() {
                     @Override
                     public void onComplete() {
-
+                        ToastUtils.showLong("第一个下载完成");
                     }
 
                     @Override
@@ -97,17 +101,58 @@ public class OkHttpActivity extends AppCompatActivity implements View.OnClickLis
                 });
                 break;
             case R.id.main_btn_down2:
+                DownloadManager.getInstance().download(file,url2, new DownLoadObserver() {
+                    @Override
+                    public void onComplete() {
+                        ToastUtils.showLong("第二个下载完成");
+                    }
+
+                    @Override
+                    public void onNext(DownloadInfo value) {
+                        super.onNext(value);
+                        progressBar2.setMax((int) value.getTotal());
+                        progressBar2.setProgress((int) value.getProgress());
+                    }
+                });
                 break;
             case R.id.main_btn_down3:
+                DownloadManager.getInstance().download(file,url3, new DownLoadObserver() {
+                    @Override
+                    public void onComplete() {
+                        ToastUtils.showLong("第三个下载完成");
+                    }
+
+                    @Override
+                    public void onNext(DownloadInfo value) {
+                        super.onNext(value);
+                        progressBar3.setMax((int) value.getTotal());
+                        progressBar3.setProgress((int) value.getProgress());
+                    }
+                });
                 break;
             case R.id.main_btn_cancel1:
+                DownloadManager.getInstance().cancel(url1);
                 break;
             case R.id.main_btn_cancel2:
+                DownloadManager.getInstance().cancel(url2);
                 break;
             case R.id.main_btn_cancel3:
+                DownloadManager.getInstance().cancel(url3);
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    protected void onStop() {
+
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        DownloadManager.getInstance().cancel(url2);
+        super.onDestroy();
     }
 }

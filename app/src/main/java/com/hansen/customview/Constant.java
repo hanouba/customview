@@ -2,6 +2,8 @@ package com.hansen.customview;
 
 import android.os.Environment;
 
+import java.io.File;
+
 import retrofit2.http.PUT;
 
 /**
@@ -15,5 +17,5 @@ import retrofit2.http.PUT;
  * @version: 2.1.67
  */
 public class Constant {
-    public static final String PATH_SDCARD = Environment.getExternalStorageState();
+    public static final String PATH_SDCARD = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "com.hen";
 }

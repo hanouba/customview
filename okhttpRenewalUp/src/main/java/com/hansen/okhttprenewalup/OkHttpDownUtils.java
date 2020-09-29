@@ -124,7 +124,6 @@ public class OkHttpDownUtils {
         mDownUrl = downUrl;
         mPath = saveFilePathAndName;
         mHttpDownListener = listener;
-
         final Request request = new Request.Builder()
                 .url(mDownUrl)
                 .header("RANGE","bytes=" + mAlreadyDownLength + "-")
