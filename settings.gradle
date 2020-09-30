@@ -1,3 +1,4 @@
+include ':cmekdemo'
 include ':rxjava3lib'
 include ':aretrofitdemo'
 include ':mzbanner'

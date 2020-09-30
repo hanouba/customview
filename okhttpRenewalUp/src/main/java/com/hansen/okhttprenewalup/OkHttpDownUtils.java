@@ -116,7 +116,7 @@ public class OkHttpDownUtils {
     /**
      * 有断点续传的get下载
      * @param downUrl
-     * @param saveFilePathAndName
+     * @param saveFilePathAndName   File file = new File(mFile,fileName);  路径加文件名
      * @param listener
      */
     public void getRenewalDownRequest(final String downUrl, final File saveFilePathAndName, final HttpDownListener listener) {

@@ -17,6 +17,9 @@ package com.hansen.rxjava3lib.rxjava3;
 
 import android.util.Log;
 
+import com.hansen.rxjava3lib.http.http.ExceptionHandler;
+import com.hansen.rxjava3lib.http.http.ResponseException;
+
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Observable;
@@ -31,8 +34,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Response;
-import retrofit2.adapter.http.http.ExceptionHandler;
-import retrofit2.adapter.http.http.ResponseException;
+
 
 final class RxJava3CallAdapter<R> implements CallAdapter<R, Object> {
   private final Type responseType;

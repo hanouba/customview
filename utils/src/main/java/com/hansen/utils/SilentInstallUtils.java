@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.annotation.RequiresPermission;
+import androidx.core.content.FileProvider;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.CloseUtils;
@@ -533,6 +534,35 @@ public final class SilentInstallUtils {
                 mCountDownLatch.countDown();
             }
         }
+    }
+
+    /**
+     * 默认安装模式
+     * @param context
+     * @param filePath
+     * @return
+     */
+    public static boolean installApk(Context context, String filePath) {
+        try {
+            File appFile = new File(filePath);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Uri fileUri = FileProvider.getUriForFile(context, context.getApplicationContext().getPackageName() + ".provider", appFile);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
+            } else {
+                intent.setDataAndType(Uri.fromFile(appFile), "application/vnd.android.package-archive");
+            }
+            if (context.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+
+                context.startActivity(intent);
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

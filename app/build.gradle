@@ -1,8 +1,21 @@
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.greenrobot.greendao'
 android {
+
+    signingConfigs {
+        config {
+            storeFile file('../customapp.jks')
+//F:\apk_key\ivosmApp
+            keyAlias 'cus'
+            keyPassword '123456'
+            storePassword '123456'
+        }
+    }
+
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
@@ -15,6 +28,7 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.config
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -22,6 +36,13 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    // 自定义输出配置
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            def df = new SimpleDateFormat("yyyyMMdd_HHmm")
+            outputFileName = "ivsom_zx_v${df.format(new Date())}_${variant.versionName}_${variant.name}.apk"
+        }
     }
 }
 

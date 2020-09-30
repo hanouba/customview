@@ -73,5 +73,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="取消3"/>
+
+
+
     </LinearLayout>
+    <Button
+        android:onClick="install"
+        android:text="默认安装"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:onClick="silensinstall"
+        android:text="静默安装"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:onClick="downTest"
+        android:text="断点下载2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

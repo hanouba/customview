@@ -25,6 +25,7 @@ import com.hansen.customview.mpandroidchart.SmallChartActivity;
 import com.hansen.customview.mpandroidchart.VideoRateActivity;
 import com.hansen.customview.test.TestActivity;
 import com.hansen.rxjava.RxjavaActivity;
+import com.hansen.utils.SilentInstallUtils;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void impRecyclerView(View view) {
+
         startActivity(new Intent(this, MultiDatasetActivity.class));
     }
 
@@ -94,4 +96,6 @@ public class MainActivity extends AppCompatActivity {
     public void renewalDown(View view) {
         startActivity(new Intent(this, OkHttpActivity.class));
     }
+
+
 }
