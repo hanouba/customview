@@ -19,10 +19,7 @@ interface HomeContract {
     interface View : IBaseView {
         fun setHomeData(homeBean: HomeBean);
         fun setMoreData(itemList: ArrayList<HomeBean.Issue.Item>)
-
         fun showError(msg: String,error:Int)
-
-
     }
 
     interface Presenter : IBasePresent<View> {

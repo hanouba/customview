@@ -92,4 +92,7 @@ dependencies {
 
     implementation project(path: ':okhttpRenewalUp')
 
+//    This library is in alpha stage. Most features are working, but some features might not work as intended.
+    implementation 'xyz.quaver:documentfilex:0.3'
+
 }

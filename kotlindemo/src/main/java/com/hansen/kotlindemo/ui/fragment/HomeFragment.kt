@@ -49,15 +49,22 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
     //加载更多
     private var loadingMore = false
+    //是否刷新
     private var isRefresh = false
+    //自定义的下落刷新header
     private var mMateriaHeader: MaterialHeader? = null
 
     companion object {
         fun getInstance(title: String): HomeFragment {
+            //homefragment 对象
             val fragment = HomeFragment()
+            //bundle 对象
             val bundle = Bundle()
+            //将bundle 赋值给argument
             fragment.arguments = bundle
+            //将title赋值给homefragment
             fragment.mTitle = title
+            //放回homefragment
             return fragment
         }
     }
@@ -124,7 +131,9 @@ class HomeFragment : BaseFragment(), HomeContract.View {
     }
 
     override fun initView() {
+        //绑定界面
         mPresenter.attachView(this)
+        //
         mRefreshLayout.setEnableHeaderTranslationContent(true)
         mRefreshLayout.setOnRefreshListener {
             isRefresh = true

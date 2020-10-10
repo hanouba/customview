@@ -7,7 +7,7 @@ package com.hansen.cmekdemo;
  */
 public class JNITest {
     static {
-        System.loadLibrary("JniLib");
+        System.loadLibrary("MyJni");
     }
-    public native String getString();
+    public native static String getString();
 }

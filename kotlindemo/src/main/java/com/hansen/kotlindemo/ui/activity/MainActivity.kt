@@ -10,6 +10,7 @@ import com.hansen.kotlindemo.R
 import com.hansen.kotlindemo.base.BaseActivity
 import com.hansen.kotlindemo.mvp.model.bean.TabEntity
 import com.hansen.kotlindemo.showToast
+import com.hansen.kotlindemo.ui.fragment.DiscoveryFragment
 import com.hansen.kotlindemo.ui.fragment.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.ArrayList
@@ -25,7 +26,7 @@ class MainActivity : BaseActivity() {
     private val mTabEntities = ArrayList<CustomTabEntity>()
 
     private var mHomeFragment: HomeFragment? = null
-    private var mDiscoveryFragment: HomeFragment? = null
+    private var mDiscoveryFragment: DiscoveryFragment? = null
     private var mHotFragment: HomeFragment? = null
     private var mMineFragment: HomeFragment? = null
     //默认为0
@@ -88,7 +89,7 @@ class MainActivity : BaseActivity() {
             1  //发现
             -> mDiscoveryFragment?.let {
                 transaction.show(it)
-            } ?: HomeFragment.getInstance(mTitles[position]).let {
+            } ?: DiscoveryFragment.getInstance(mTitles[position]).let {
                 mDiscoveryFragment = it
                 transaction.add(R.id.fl_container, it, "discovery") }
             2  //热门
