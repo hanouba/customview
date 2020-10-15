@@ -12,19 +12,22 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.blankj.utilcode.util.ConvertUtils;
+import com.hansen.launcher.AHansen;
+import com.hansen.thread.DefaultPoolExecutor;
+import com.hansen.utils.Consts;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import androidx.annotation.Nullable;
+import androidx.arch.core.executor.DefaultTaskExecutor;
 
 /**
  * @author HanN on 2020/10/14 16:54
  * @email: 1356548475@qq.com
  * @project customview
- * @description:
- * 1如果当前圆的数量没有超过数量上限，则随机生成半径不同的圆。
+ * @description: 1如果当前圆的数量没有超过数量上限，则随机生成半径不同的圆。
  * 2设定这些圆的初始位置。
  * 3随机设定垂直向上平移速度。
  * 4随机设定水平平移速度。
@@ -39,7 +42,7 @@ import androidx.annotation.Nullable;
 public class BubbleView extends View {
     //气泡数量
     private int mBubbleCount = 30;
-    private int mBubbleRefrshTime = 1000;
+    private int mBubbleRefrshTime = 3000;
     //气泡最多半径
     private int mBubbleMaxRadius = 30;
     //气泡最小半径
@@ -69,8 +72,8 @@ public class BubbleView extends View {
     private RectF mContentRectF;                // 实际可用内容区域
     private RectF mWaterRectF;                  // 水占用的区域
 
-//    使用Path不仅能够绘制简单图形，也可以绘制这些比较复杂的图形。
-//    另外，根据路径绘制文本和剪裁画布都会用到Path
+    //    使用Path不仅能够绘制简单图形，也可以绘制这些比较复杂的图形。
+    //    另外，根据路径绘制文本和剪裁画布都会用到Path
     //用path 绘制瓶子和水
     private Path mBottlePath;
     private Path mWaterPath;
@@ -85,11 +88,11 @@ public class BubbleView extends View {
 
 
     public BubbleView(Context context) {
-        this(context,null);
+        this(context, null);
     }
 
     public BubbleView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs,0);
+        this(context, attrs, 0);
     }
 
     public BubbleView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -141,9 +144,10 @@ public class BubbleView extends View {
         mBubblePaint.setAlpha(mBubbleAlpha);
 
     }
+
     private class Bubb {
-         int radius; //气泡半径
-         float x;// 气泡的x坐标
+        int radius; //气泡半径
+        float x;// 气泡的x坐标
         float y; // 气泡的y坐标;
         float speedX; //水平的移动速度
         float speedY; //垂直方向的速度
@@ -155,9 +159,9 @@ public class BubbleView extends View {
         super.onDraw(canvas);
 
         //画瓶子
-        canvas.drawPath(mBottlePath,mBottlePaint);
+        canvas.drawPath(mBottlePath, mBottlePaint);
         //画水
-        canvas.drawPath(mWaterPath,mWaterPaint);
+        canvas.drawPath(mWaterPath, mWaterPaint);
         //画气泡
         drawBubble(canvas);
     }
@@ -165,8 +169,9 @@ public class BubbleView extends View {
 
     //气泡的集合
     private ArrayList<Bubb> mBubbles = new ArrayList<>();
+
     private void drawBubble(Canvas canvas) {
-//        为什么不直接遍历mBubbles呢?
+        //        为什么不直接遍历mBubbles呢?
         /**
          * 这里同样复制了一个新的 List 进行操作，不过这个与上面的原因不同，
          * 是为了防止多线程问题。由于在绘制的过程中，
@@ -175,10 +180,11 @@ public class BubbleView extends View {
          */
         List<Bubb> list = new ArrayList<>(mBubbles);
         System.out.println("Bubble--画气泡drawBubble");
-        for (Bubb bubb: list
-             ) {
-            if (null == bubb) continue;
-            canvas.drawCircle(bubb.x,bubb.y,bubb.radius,mBubblePaint);
+        for (Bubb bubb : list
+        ) {
+            if (null == bubb)
+                continue;
+            canvas.drawCircle(bubb.x, bubb.y, bubb.radius, mBubblePaint);
         }
 
     }
@@ -188,7 +194,7 @@ public class BubbleView extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         System.out.println("Bubble--界面 onSizeChanged");
         //整个区域大小
-        mContentRectF = new RectF(getPaddingLeft(),getPaddingTop(),w - getPaddingRight(),h-getPaddingBottom());
+        mContentRectF = new RectF(getPaddingLeft(), getPaddingTop(), w - getPaddingRight(), h - getPaddingBottom());
         //中心点的位置 - 瓶子宽度的一半  得到左边的位置  水平方向起点
         float bl = mContentRectF.centerX() - mBottleWidth / 2;
         //垂直方向起点
@@ -219,7 +225,7 @@ public class BubbleView extends View {
         mWaterPath.lineTo(br, bb - mWaterHeight);
         //封闭
         mWaterPath.close();
-//      配合使用 实现渐变色
+        //      配合使用 实现渐变色
         // 和new rectF效果一样 获取方块区域  并设置渐变色  如果不设置方块区域就没有渐变色效果
         mWaterRectF.set(bl, bb - mWaterHeight, br, bb);
         LinearGradient gradient = new LinearGradient(mWaterRectF.centerX(), mWaterRectF.top,
@@ -248,49 +254,57 @@ public class BubbleView extends View {
     private void startBubbleSync() {
         stopBubbleSync();
 
-        /**
-         * 这里没有用变量来控制循环，而是监听了中断事件，
-         * 在当拦截到 InterruptedException 的时候，使用 break 跳出了死循环，因此线程也就结束了，方法简单粗暴。
-         */
-        mBubbleThread = new Thread() {
+        mBubbleThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 while (true) {
                     try {
                         //在线程里面间隔执行
                         Thread.sleep(mBubbleRefrshTime);
-                        System.out.println("Bubble线程开始");
+                        AHansen.logger.info(Consts.TAG, "bubble线程开始");
                         tryCreateBubble();
                         refreshBubbles();
                         //重新调用 onDraw 画气泡
                         postInvalidate();
                     } catch (InterruptedException e) {
-                        System.out.println("Bubble线程结束");
+                        AHansen.logger.info(Consts.TAG, "Bubble线程结束");
                         break;
                     }
                 }
             }
-        };
+        });
         mBubbleThread.start();
+
+        /**
+         * 这里没有用变量来控制循环，而是监听了中断事件，
+         * 在当拦截到 InterruptedException 的时候，使用 break 跳出了死循环，因此线程也就结束了，方法简单粗暴。
+         */
+
+
+
     }
 
     // 停止气泡线程
     private void stopBubbleSync() {
-        if (null == mBubbleThread) return;
+        if (null == mBubbleThread)
+            return;
         //中断
         mBubbleThread.interrupt();
         mBubbleThread = null;
+
+
+
     }
 
     // 尝试创建气泡
     private void tryCreateBubble() {
-        if (null == mContentRectF) return;
+        if (null == mContentRectF)
+            return;
         //如果气泡数量大于最大数量 停止创建
         if (mBubbles.size() >= mBubbleCount) {
             return;
         }
         //随机浮点数 0-1 0.35789108   控制气泡生成速度
-        System.out.println("Bubble线程开始--随机数"+random.nextFloat());
         if (random.nextFloat() < 0.95) {
             return;
         }

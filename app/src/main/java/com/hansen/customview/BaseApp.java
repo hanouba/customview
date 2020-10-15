@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.hansen.customview.gradle.ProcessLifecycleObserver;
+import com.hansen.launcher.AHansen;
 
 import androidx.lifecycle.ProcessLifecycleOwner;
 
@@ -28,5 +29,9 @@ public class BaseApp extends Application {
         super.onCreate();
         instance = this;
         ProcessLifecycleOwner.get().getLifecycle().addObserver(observer);
+
+        AHansen.init(this);
+        AHansen.setShowLog(true);
+
     }
 }
