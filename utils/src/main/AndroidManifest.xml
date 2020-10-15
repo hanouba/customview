@@ -1,2 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hansen.utils" />
+    package="com.hansen.utils" >
+
+    <uses-permission android:name="android.permission.READ_PRIVILEGED_PHONE_STATE" />
+</manifest>

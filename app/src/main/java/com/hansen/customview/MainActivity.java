@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hansen.customview.activity.CustomViewActivity;
 import com.hansen.customview.activity.OkHttpActivity;
 import com.hansen.customview.activity.UIActivity;
 import com.hansen.customview.flowlayout.LanuchActivity;
@@ -25,6 +26,7 @@ import com.hansen.customview.mpandroidchart.SmallChartActivity;
 import com.hansen.customview.mpandroidchart.VideoRateActivity;
 import com.hansen.customview.test.TestActivity;
 import com.hansen.rxjava.RxjavaActivity;
+import com.hansen.utils.NetWorkUtils;
 import com.hansen.utils.SilentInstallUtils;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+        NetWorkUtils.getInstance().readWifiDevices(this);
+
 
     }
 
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     public void toHankChart(View view) {
         startActivity(new Intent(this, TestActivity.class));
     }
-
+    //rxjava
     public void toRxjava(View view) {
         startActivity(new Intent(this, RxjavaActivity.class));
     }
@@ -88,14 +92,20 @@ public class MainActivity extends AppCompatActivity {
     public void flowlayout(View view) {
         startActivity(new Intent(this, LanuchActivity.class));
     }
-
+    //listview
     public void listview(View view) {
         startActivity(new Intent(this, UIActivity.class));
     }
-
+    //断点下载
     public void renewalDown(View view) {
-        startActivity(new Intent(this, OkHttpActivity.class));
+        startActivity(new Intent(this, ScanActivity.class));
     }
 
-
+    /**
+     * 自定义view
+     * @param view
+     */
+    public void customview(View view) {
+        startActivity(new Intent(this, CustomViewActivity.class));
+    }
 }
