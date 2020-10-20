@@ -74,6 +74,8 @@ public class BlueToothActivity extends AppCompatActivity {
 
 
 
+
+
         if (BluetoothAdapter.getDefaultAdapter().isDiscovering()) {
             AHansen.logger.info(TAG,"searchBlueTooth-取消搜索蓝牙设备");
             AHansen.blueToothUtils.stopDiscoverBlue();
@@ -81,6 +83,8 @@ public class BlueToothActivity extends AppCompatActivity {
             AHansen.logger.info(TAG,"searchBlueTooth-开始搜索蓝牙设备");
             AHansen.blueToothUtils.startDiscoverBlue();
         }
+
+
     }
 
     /**
@@ -109,9 +113,10 @@ public class BlueToothActivity extends AppCompatActivity {
                 //搜到到的设备不是已经绑定的设备
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
                     //显示
+                    tvDevice.append("未绑定的蓝牙设备"+"\n");
                     tvDevice.append(device.getName() + "--" + device.getAddress() + "\n");
                 } else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
-                    //如果搜索完毕
+                    //如果搜索完毕 无法监听
                     ToastUtils.showLong("搜索完毕");
                 }
             }
