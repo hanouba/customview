@@ -14,6 +14,8 @@ import android.view.View;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.hansen.launcher.AHansen;
 import com.hansen.thread.DefaultPoolExecutor;
+import com.hansen.thread.DefaultThreadFactory;
+import com.hansen.thread.demo1.ThreadPoolManager;
 import com.hansen.utils.Consts;
 
 import java.util.ArrayList;
@@ -253,14 +255,39 @@ public class BubbleView extends View {
     // 开始气泡线程
     private void startBubbleSync() {
         stopBubbleSync();
+        /**
+         * 这里没有用变量来控制循环，而是监听了中断事件，
+         * 在当拦截到 InterruptedException 的时候，使用 break 跳出了死循环，因此线程也就结束了，方法简单粗暴。
+         */
+        //
+        //        mBubbleThread = new Thread(new Runnable() {
+        //            @Override
+        //            public void run() {
+        //                while (true) {
+        //                    try {
+        //                        //在线程里面间隔执行
+        //                        Thread.sleep(mBubbleRefrshTime);
+        //                        AHansen.logger.info(Consts.TAG, "bubble线程开始");
+        //                        tryCreateBubble();
+        //                        refreshBubbles();
+        //                        //重新调用 onDraw 画气泡
+        //                        postInvalidate();
+        //                    } catch (InterruptedException e) {
+        //                        AHansen.logger.info(Consts.TAG, "Bubble线程结束");
+        //                        break;
+        //                    }
+        //                }
+        //            }
+        //        });
+        //        mBubbleThread.start();
 
-        mBubbleThread = new Thread(new Runnable() {
+        mRun = new Runnable() {
             @Override
             public void run() {
                 while (true) {
                     try {
                         //在线程里面间隔执行
-                        Thread.sleep(mBubbleRefrshTime);
+                        Thread.sleep(3000);
                         AHansen.logger.info(Consts.TAG, "bubble线程开始");
                         tryCreateBubble();
                         refreshBubbles();
@@ -272,27 +299,23 @@ public class BubbleView extends View {
                     }
                 }
             }
-        });
-        mBubbleThread.start();
-
-        /**
-         * 这里没有用变量来控制循环，而是监听了中断事件，
-         * 在当拦截到 InterruptedException 的时候，使用 break 跳出了死循环，因此线程也就结束了，方法简单粗暴。
-         */
-
+        };
+        DefaultPoolExecutor.getInstance().execute(mRun);
 
 
     }
 
+    private Runnable mRun;
+
     // 停止气泡线程
     private void stopBubbleSync() {
-        if (null == mBubbleThread)
-            return;
-        //中断
-        mBubbleThread.interrupt();
-        mBubbleThread = null;
+        //        if (null == mBubbleThread)
+        //            return;
+        ////        中断
+        //        mBubbleThread.interrupt();
+        //        mBubbleThread = null;
 
-
+        DefaultPoolExecutor.getInstance().shutdown();
 
     }
 

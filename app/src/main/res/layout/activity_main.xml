@@ -7,18 +7,18 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.hansen.stextlib.SeparatedEditText
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:inputType="number"
-        app:blockColor="@color/colorPrimary"
-        app:blockSpacing="2dp"
-        app:corner="10dp"
-        app:cursorColor="@android:color/holo_green_light"
-        app:cursorDuration="1000"
-        app:cursorWidth="3dp"
-        app:maxLength="9"
-        app:separateType="@integer/type_solid" />
+<!--    <com.hansen.stextlib.SeparatedEditText-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:inputType="number"-->
+<!--        app:blockColor="@color/colorPrimary"-->
+<!--        app:blockSpacing="2dp"-->
+<!--        app:corner="10dp"-->
+<!--        app:cursorColor="@android:color/holo_green_light"-->
+<!--        app:cursorDuration="1000"-->
+<!--        app:cursorWidth="3dp"-->
+<!--        app:maxLength="9"-->
+<!--        app:separateType="@integer/type_solid" />-->
 
 
     <Button
@@ -66,6 +66,12 @@
     <Button
         android:onClick="customview"
         android:text="自定义view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:onClick="bluetooth"
+        android:text="蓝牙的使用"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

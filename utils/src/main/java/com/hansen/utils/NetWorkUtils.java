@@ -29,7 +29,7 @@ import androidx.core.app.ActivityCompat;
  * @author HanN on 2020/10/10 14:34
  * @email: 1356548475@qq.com
  * @project customview
- * @description:
+ * @description: * 扫描局域网设备
  * @updateuser:
  * @updatedata: 2020/10/10 14:34
  * @updateremark:

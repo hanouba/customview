@@ -167,7 +167,7 @@ public class SeparatedEditText extends AppCompatEditText {
                 inputMethodManager.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
                 LogUtil.d(TAG, "输入法管理器");
             }
-        }, 500);
+        }, 50000);
 
         //画笔
         blockPaint = new Paint();

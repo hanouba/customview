@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hansen.customview.activity.BlueToothActivity;
 import com.hansen.customview.activity.CustomViewActivity;
 import com.hansen.customview.activity.OkHttpActivity;
 import com.hansen.customview.activity.UIActivity;
@@ -25,6 +26,7 @@ import com.hansen.customview.mpandroidchart.MultiDatasetActivity;
 import com.hansen.customview.mpandroidchart.SmallChartActivity;
 import com.hansen.customview.mpandroidchart.VideoRateActivity;
 import com.hansen.customview.test.TestActivity;
+import com.hansen.launcher.AHansen;
 import com.hansen.rxjava.RxjavaActivity;
 import com.hansen.utils.NetWorkUtils;
 import com.hansen.utils.SilentInstallUtils;
@@ -49,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         RxPermissions rxPermissions = new RxPermissions(this);
-        rxPermissions.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE)
+        rxPermissions.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
                 .subscribe(new Consumer<Permission>() {
                     @Override
                     public void accept(Permission permission) throws Exception {
@@ -107,5 +110,13 @@ public class MainActivity extends AppCompatActivity {
      */
     public void customview(View view) {
         startActivity(new Intent(this, CustomViewActivity.class));
+    }
+
+    /**
+     * 蓝牙的使用
+     * @param view
+     */
+    public void bluetooth(View view) {
+        startActivity(new Intent(this, BlueToothActivity.class));
     }
 }
