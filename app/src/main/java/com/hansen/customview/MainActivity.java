@@ -1,6 +1,7 @@
 package com.hansen.customview;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import io.reactivex.functions.Consumer;
 
 import android.Manifest;
@@ -26,6 +27,7 @@ import com.hansen.customview.mpandroidchart.MultiDatasetActivity;
 import com.hansen.customview.mpandroidchart.SmallChartActivity;
 import com.hansen.customview.mpandroidchart.VideoRateActivity;
 import com.hansen.customview.test.TestActivity;
+import com.hansen.databinding.DataBindActivity;
 import com.hansen.launcher.AHansen;
 import com.hansen.rxjava.RxjavaActivity;
 import com.hansen.utils.NetWorkUtils;
@@ -41,15 +43,12 @@ import org.greenrobot.greendao.identityscope.IdentityScopeType;
 public class MainActivity extends AppCompatActivity {
 
 
-    private VideoDateInfoBeanDao videoDateInfoBeanDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextView textView = new TextView(this);
-
-
         RxPermissions rxPermissions = new RxPermissions(this);
         rxPermissions.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -62,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                             // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时。还会提示请求权限的对话框
                         } else {
                             // 用户拒绝了该权限，而且选中『不再询问』
-
                         }
                     }
                 });
@@ -117,6 +115,6 @@ public class MainActivity extends AppCompatActivity {
      * @param view
      */
     public void bluetooth(View view) {
-        startActivity(new Intent(this, BlueToothActivity.class));
+        startActivity(new Intent(this, DataBindActivity.class));
     }
 }

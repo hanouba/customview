@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="databinding.UserBind">
+
+        <import type="com.hansen.databinding.bean.User" />
+        <import type="com.hansen.databinding.Main3Activity.GoodsHandler" />
+
+        <variable
+            name="userinfo"
+            type="User" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.hansen.databinding.DataBindActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <TextView
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{userinfo.name,default=vvjvjvjv}" />
+
+        <TextView
+            android:id="@+id/tv_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{userinfo.password}" />
+
+
+        <Button
+            android:id="@+id/bt_btn_activity3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="toActivity3"
+            android:text="BaseObservable" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

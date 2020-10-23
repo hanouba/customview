@@ -41,7 +41,7 @@ public class BlueToothActivity extends AppCompatActivity {
         tvDevice = findViewById(R.id.tv_bonded_device);
 
     }
-//    打开蓝牙
+// 打开蓝牙
     public void open(View view) {
         AHansen.logger.info(TAG,"打开蓝牙");
         AHansen.blueToothUtils.openBlueTooth(this);

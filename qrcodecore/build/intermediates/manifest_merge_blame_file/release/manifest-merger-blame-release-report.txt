@@ -1,0 +1,33 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="cn.bingoogolapple.qrcode.core"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="19"
+8-->G:\gitWorkPlace\aboutCustomView\qrcodecore\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="28" />
+9-->G:\gitWorkPlace\aboutCustomView\qrcodecore\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.CAMERA" />
+11-->G:\gitWorkPlace\aboutCustomView\qrcodecore\src\main\AndroidManifest.xml:4:5-65
+11-->G:\gitWorkPlace\aboutCustomView\qrcodecore\src\main\AndroidManifest.xml:4:22-62
+12    <uses-permission android:name="android.permission.FLASHLIGHT" />
+12-->G:\gitWorkPlace\aboutCustomView\qrcodecore\src\main\AndroidManifest.xml:5:5-69
+12-->G:\gitWorkPlace\aboutCustomView\qrcodecore\src\main\AndroidManifest.xml:5:22-66
+13
+14    <uses-feature
+14-->G:\gitWorkPlace\aboutCustomView\qrcodecore\src\main\AndroidManifest.xml:7:5-9:36
+15        android:name="android.hardware.camera.autofocus"
+15-->G:\gitWorkPlace\aboutCustomView\qrcodecore\src\main\AndroidManifest.xml:8:9-57
+16        android:required="false" />
+16-->G:\gitWorkPlace\aboutCustomView\qrcodecore\src\main\AndroidManifest.xml:9:9-33
+17    <uses-feature
+17-->G:\gitWorkPlace\aboutCustomView\qrcodecore\src\main\AndroidManifest.xml:10:5-12:36
+18        android:name="android.hardware.camera.flash"
+18-->G:\gitWorkPlace\aboutCustomView\qrcodecore\src\main\AndroidManifest.xml:11:9-53
+19        android:required="false" />
+19-->G:\gitWorkPlace\aboutCustomView\qrcodecore\src\main\AndroidManifest.xml:12:9-33
+20
+21</manifest>

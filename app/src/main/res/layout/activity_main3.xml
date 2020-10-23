@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="databinding.Main3ActivityBinding">
+        <import type="com.hansen.databinding.bean.Goods"/>
+        <import type="com.hansen.databinding.Main3Activity.GoodsHandler"/>
+        <variable
+            name="goods"
+            type="Goods" />
+        <variable
+            name="goodsHandler"
+            type="GoodsHandler" />
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        tools:context="com.hansen.databinding.Main3Activity">
+        <TextView
+            style="@style/TextViewStyle"
+            android:text="@{goods.name}" />
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:text="@{goods.details}" />
+
+        <TextView
+            style="@style/TextViewStyle"
+            android:text="@{String.valueOf(goods.price)}" />
+
+        <Button
+            style="@style/BtnStyle"
+            android:onClick="@{()->goodsHandler.changeGoodsName()}"
+            android:text="改变属性 name" />
+
+        <Button
+            style="@style/BtnStyle"
+            android:onClick="@{()->goodsHandler.changeGoodsDetails()}"
+            android:text="改变属性 details 和 price" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -1,3 +1,4 @@
+include ':tallapp'
 include ':qrcodecore'
 include ':cmekdemo'
 include ':rxjava3lib'
